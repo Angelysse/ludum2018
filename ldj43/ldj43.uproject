@@ -1,13 +1,16 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "4.20",
+	"EngineAssociation": "{58C900F5-4F37-6949-04E7-0CAF51D07AAB}",
 	"Category": "",
 	"Description": "",
 	"Modules": [
 		{
 			"Name": "ldj43",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
 		}
 	]
 }
