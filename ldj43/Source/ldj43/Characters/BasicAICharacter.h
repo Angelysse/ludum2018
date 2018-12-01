@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 
 #include "GlobalCharacter.h"
+#include "BehaviorTree/BehaviorTree.h"
 
 #include "BasicAICharacter.generated.h"
 
@@ -14,10 +15,18 @@ class LDJ43_API ABasicAICharacter : public AGlobalCharacter
 {
 	GENERATED_BODY()
 
-public:	
-	// Sets default values for this character's properties
-	ABasicAICharacter();
+	protected:
+		//Overriden Methods
+		virtual void BeginPlay() override;
 
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;	
+	public:
+		//Variables
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Behavior)
+		UBehaviorTree* _botBehaviorTree = nullptr;
+
+		//Constructors
+		ABasicAICharacter();
+
+		//Overriden Methods
+		virtual void Tick(float DeltaTime) override;
 };

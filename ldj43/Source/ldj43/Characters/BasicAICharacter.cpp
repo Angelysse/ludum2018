@@ -2,18 +2,31 @@
 
 #include "BasicAICharacter.h"
 
+//============================
+//Constructors
 
-// Sets default values
-ABasicAICharacter::ABasicAICharacter()
+ABasicAICharacter::ABasicAICharacter():
+	AGlobalCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
 
-// Called every frame
+//============================
+//Overriden Methods
+
+void ABasicAICharacter::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
+//--------------------------
+
 void ABasicAICharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
+
+//============================
+//Custom Methods

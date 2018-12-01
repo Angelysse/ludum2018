@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Characters/MainCharacter.h"
+#include "Characters/GlobalCharacter.h"
 
 #include "Animation/AnimInstance.h"
 #include "MainAnimInstance.generated.h"
@@ -12,7 +12,7 @@ class LDJ43_API UMainAnimInstance : public UAnimInstance
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player")
-	AMainCharacter* _chara = nullptr;
+	AGlobalCharacter* _chara = nullptr;
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player")

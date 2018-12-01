@@ -3,7 +3,7 @@
 
 void UMainAnimInstance::NativeInitializeAnimation()
 {
-	_chara = Cast<AMainCharacter>(TryGetPawnOwner());
+	_chara = Cast<AGlobalCharacter>(TryGetPawnOwner());
 }
 
 void UMainAnimInstance::NativeUpdateAnimation(float DeltaSeconds)

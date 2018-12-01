@@ -2,6 +2,11 @@
 
 #include "BasicAIController.h"
 
+#include "Characters/BasicAICharacter.h"
+
+#include "EngineGlobals.h"
+#include "Engine/Engine.h"
+#include "Engine/World.h"
 #include "Classes/BehaviorTree/BlackboardComponent.h"
 
 //=====================
@@ -20,15 +25,15 @@ void ABasicAIController::Possess(APawn* InPawn)
 {
 	Super::Possess(InPawn);
 
-	//ADwarfCharacter* bot = Cast<ADwarfCharacter>(InPawn);
+	ABasicAICharacter* bot = Cast<ABasicAICharacter>(InPawn);
 
 	//Start behavior
-	/*if (bot != nullptr && bot->m_bot_behavior != nullptr)
+	if (bot != nullptr && bot->_botBehaviorTree != nullptr)
 	{
-		RunBehaviorTree(bot->m_bot_behavior);
+		RunBehaviorTree(bot->_botBehaviorTree);
 
 		initDefaultBBValues();
-	}*/
+	}
 }
 
 //=====================
@@ -36,9 +41,25 @@ void ABasicAIController::Possess(APawn* InPawn)
 
 void ABasicAIController::initDefaultBBValues()
 {
-	//Set target (player 0)
+	//Get Player 0
+	APawn* playerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
 
-	//Set activation
+	if (playerPawn != nullptr)
+	{
+		setTargetPawn(playerPawn);
+	}
 }
 
 //-----------------
+
+void ABasicAIController::setTargetPawn(APawn* targetPawn)
+{
+	Blackboard->SetValueAsObject(TEXT("Target"), targetPawn);
+}
+
+//-----------------
+
+void ABasicAIController::setIsActive(bool isActive)
+{
+	Blackboard->SetValueAsBool(TEXT("IsActive"), isActive);
+}
