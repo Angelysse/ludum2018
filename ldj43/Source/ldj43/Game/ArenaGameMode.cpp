@@ -44,7 +44,10 @@ void AArenaGameMode::GenerateMap()
 	uint32 gridWidth = _mapWidth / _mapStepWidth;
 	uint32 gridHeight = _mapHeight / _mapStepHeight;
 
-	char* map = new char[gridWidth * gridHeight]{};
+	//char* map = new char[gridWidth * gridHeight]{};
+
+	if (_wallsRoot->Children.Num())
+		_wallsRoot->Children.Empty();
 
 	// Create some big blocks.
 	uint32 bigWallNum = FMath::RandRange(_mapMinWalls, _mapMaxWalls);
@@ -59,12 +62,12 @@ void AArenaGameMode::GenerateMap()
 		if (!(posX > gridWidth / 2 || posX + sizeX < gridWidth / 2 || posY > gridHeight / 2 || posY + sizeY < gridHeight / 2))
 			goto START; // You know, I have slept only 2 hours... Yes life.
 
-		// Fill map.
-		for (uint32 j = 0u; j < sizeY; j++)
-		{
-			for (uint32 k = 0u; k < sizeX; k++)
-				map[posX + posY * gridWidth] = 1;
-		}
+		//// Fill map.
+		//for (uint32 j = 0u; j < sizeY; j++)
+		//{
+		//	for (uint32 k = 0u; k < sizeX; k++)
+		//		map[posX + posY * gridWidth] = 1;
+		//}
 
 		// Spawn Block.
 		auto actor = GetWorld()->SpawnActor<ACubeActor>(FVector(float(posX) - _mapWidth / 2, float(posY) - _mapHeight / 2, 270.0), FRotator::ZeroRotator);
