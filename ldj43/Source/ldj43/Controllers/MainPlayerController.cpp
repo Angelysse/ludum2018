@@ -62,11 +62,12 @@ void AMainPlayerController::moveForward(float value)
 
 void AMainPlayerController::moveRight(float value)
 {
-	APawn* controlledPawn = GetPawn();
+	AMainCharacter* controlledPawn = Cast<AMainCharacter>(GetPawn());
 
 	if (controlledPawn != nullptr)
 	{
 		controlledPawn->AddMovementInput(controlledPawn->GetActorRightVector(), value);
+		//controlledPawn->AddMovementInput(controlledPawn->GetCameraComponent()->GetRightVector(); value);
 	}
 }
 
