@@ -2,6 +2,8 @@
 
 #include "GameFramework/Character.h"
 
+#include "Game/GlobalPlayerState.h"
+
 #include "Items/ItemComponentBase.h"
 #include "Weapons/WeaponComponentBase.h"
 
@@ -11,9 +13,6 @@ UCLASS()
 class LDJ43_API AMainCharacter : public ACharacter
 {
 	GENERATED_BODY()
-
-	float _hp = 100.0f;
-	float _speed = 10.0f;
 
 	UItemComponentBase* _item = nullptr;
 
@@ -26,10 +25,14 @@ protected:
 public:
 	AMainCharacter();
 
+	void SetMaxHP(float _maxHp);
+
 	void Tick(float DeltaTime) override;
 
 	void UseItem();
 
 	void LAttack();
 	void RAttack();
+
+	void Jump() override;
 };
