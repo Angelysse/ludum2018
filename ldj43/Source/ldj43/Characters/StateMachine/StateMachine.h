@@ -2,14 +2,15 @@
 
 #include "IdleRunState.h"
 #include "JumpState.h"
-#include "AttackState.h"
+#include "LAttackState.h"
+#include "RAttackState.h"
 
 class StateMachine
 {
 	private:
 		//Variables
 		IState*		_currentState;
-		IState*		_states[4];
+		IState*		_states[5];
 
 		//Methods
 		void initStates(AMainCharacter* chara);

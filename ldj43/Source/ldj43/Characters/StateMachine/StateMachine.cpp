@@ -15,13 +15,15 @@ StateMachine::~StateMachine()
 	delete _states[0];
 	delete _states[1];
 	delete _states[2];
+	delete _states[3];
 }
 
 void StateMachine::initStates(AMainCharacter* chara)
 {
 	_states[0] = new IdleRunState(chara);
-	_states[1] = new AttackState(chara);
-	_states[2] = new JumpState(chara);
+	_states[1] = new RAttackState(chara);
+	_states[2] = new LAttackState(chara);
+	_states[3] = new JumpState(chara);
 }
 
 bool StateMachine::switchTo(StateType nextState)
