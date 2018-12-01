@@ -22,7 +22,7 @@ void AArenaGameMode::GenerateMap()
 
 	for (uint32 i = 0u; i < bigWallNum; i++)
 	{
-		uint32 sizeX = FMath::RandRange(1, 4); uint32 sizeY = FMath::RandRange(1, 4);
+		uint32 sizeX = FMath::RandRange(1, _mapMaxWallSize); uint32 sizeY = FMath::RandRange(1, _mapMaxWallSize);
 		uint32 posX = FMath::RandRange(0, gridWidth); uint32 posY = FMath::RandRange(0, gridHeight);
 
 		// Fill map.
