@@ -8,6 +8,17 @@
 /**
  * 
  */
+
+enum class Action : uint8
+{
+	JUMP = 0,
+	LEFT_ATTACK,
+	RIGHT_ATTACK,
+	USE_ITEM,
+	LEFT_SACRIFICE,
+	RIGHT_SACRIFICE
+};
+
 UCLASS()
 class LDJ43_API AMainPlayerController : public APlayerController
 {
@@ -36,6 +47,7 @@ class LDJ43_API AMainPlayerController : public APlayerController
 		void Possess(APawn* possessedPawn) override;
 		void SetupInputComponent() override;
 
-		//Custom Methods
-		
+		void enableAction(Action action);
+		void disableAction(Action action);
+		void modifyAction(Action action, bool shouldEnable);
 };
