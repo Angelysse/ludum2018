@@ -10,7 +10,7 @@ void AttackState::onExitState()
 	//Do something
 }
 
-bool AttackState::canSwitchTo(uint8 newState)
+bool AttackState::canSwitchTo(uint8 newState) const
 {
 	return newState == static_cast<uint8>(StateType::IDLE);
 }

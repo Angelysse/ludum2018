@@ -16,37 +16,38 @@ class LDJ43_API AMainCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-	UItemComponentBase*		_item = nullptr;
+	private:
+		UItemComponentBase*		_item = nullptr;
 
-	UWeaponComponentBase*	_lWeapon = nullptr;
-	UWeaponComponentBase*	_rWeapon = nullptr;
+		UWeaponComponentBase*	_lWeapon = nullptr;
+		UWeaponComponentBase*	_rWeapon = nullptr;
 
-	bool					_isAttacking = false;
+		bool					_isAttacking = false;
 
-protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class USpringArmComponent* _cameraBoom = nullptr;
+	protected:
+		UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		class USpringArmComponent* _cameraBoom = nullptr;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class UCameraComponent* _camera = nullptr;
+		UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		class UCameraComponent* _camera = nullptr;
 
-	void BeginPlay() override;
+		void BeginPlay() override;
 
-public:
-	AMainCharacter();
+	public:
+		AMainCharacter();
 
-	UCameraComponent* GetCameraComponent();
+		UCameraComponent const* GetCameraComponent();
 
-	void SetMaxHP(float _maxHp);
-	void SetWeapon(const FString& name, bool isRight = true);
+		void SetMaxHP(float _maxHp);
+		void SetWeapon(const FString& name, bool isRight = true);
 
 
-	void Tick(float DeltaTime) override;
+		void Tick(float DeltaTime) override;
 
-	void UseItem();
+		void UseItem();
 
-	void LAttack();
-	void RAttack();
+		void LAttack();
+		void RAttack();
 
-	void Jump() override;
+		void Jump() override;
 };

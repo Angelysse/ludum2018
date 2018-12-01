@@ -35,7 +35,7 @@ void AMainCharacter::BeginPlay()
 	Super::BeginPlay();
 }
 
-UCameraComponent* AMainCharacter::GetCameraComponent()
+UCameraComponent const* AMainCharacter::GetCameraComponent()
 {
 	return _camera;
 }
