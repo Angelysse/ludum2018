@@ -95,11 +95,7 @@ void AMainPlayerController::jump()
 	AMainCharacter* controlledCharacter = Cast<AMainCharacter>(GetPawn());
 
 	if (controlledCharacter != nullptr)
-	{
-		controlledCharacter->Jump();
-	}
-
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Emerald, TEXT("AMainPlayerController::jump()"));
+		controlledCharacter->StartJump();
 }
 
 void AMainPlayerController::useLeftWeaponSlot()

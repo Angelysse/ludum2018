@@ -10,7 +10,9 @@ class LDJ43_API UMainAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
 
-	AMainCharacter* _charac = nullptr;
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player")
+	AMainCharacter* _chara = nullptr;
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player")

@@ -1,13 +1,14 @@
 #include "JumpState.h"
+#include "Characters/MainCharacter.h"
 
 void JumpState::onEnterState()
 {
-	//Do something
+	_chara->Jump();
 }
 
 void JumpState::onExitState()
 {
-	//Do something
+	_chara->StopJumping();
 }
 
 bool JumpState::canSwitchTo(uint8 newState) const

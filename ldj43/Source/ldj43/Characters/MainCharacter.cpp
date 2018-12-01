@@ -4,7 +4,7 @@
 
 #include "GameFramework/CharacterMovementComponent.h"
 
-AMainCharacter::AMainCharacter()
+AMainCharacter::AMainCharacter() : _sMachine{ this }
 {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -33,6 +33,8 @@ AMainCharacter::AMainCharacter()
 void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	_sMachine.switchTo(StateType::IDLE);
 }
 
 UCameraComponent const* AMainCharacter::GetCameraComponent()
@@ -69,6 +71,11 @@ void AMainCharacter::SetWeapon(const FString& name, bool isRight)
 	}
 }
 
+uint8 AMainCharacter::GetState() const
+{
+	return _sMachine.getState();
+}
+
 void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -102,8 +109,12 @@ void AMainCharacter::RAttack()
 	}
 }
 
-void AMainCharacter::Jump()
+void AMainCharacter::StartJump()
 {
-	if (Cast<AGlobalPlayerState>(PlayerState)->canJump && CanJump())
-		Super::Jump();
+	_sMachine.switchTo(StateType::JUMP);
+}
+
+void AMainCharacter::EndJump()
+{
+	_sMachine.switchTo(StateType::IDLE);
 }

@@ -5,6 +5,8 @@
 class JumpState : public IState
 {
 	public:
+		using IState::IState;
+		
 		//Methods
 		void onEnterState() override;
 		void onExitState() override;
