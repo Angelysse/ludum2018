@@ -14,6 +14,8 @@ class LDJ43_API AArenaGameMode : public AGlobalGameMode
 		//Variables
 		AAIManager*		_aiManager = nullptr;
 
+		AActor* _wallsRoot = nullptr;
+
 		//Custom Methods
 		void initAIManager();
 
