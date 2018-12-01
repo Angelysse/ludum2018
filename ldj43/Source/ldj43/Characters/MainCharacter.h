@@ -22,8 +22,6 @@ class LDJ43_API AMainCharacter : public ACharacter
 		UWeaponComponentBase*	_lWeapon = nullptr;
 		UWeaponComponentBase*	_rWeapon = nullptr;
 
-		bool					_isAttacking = false;
-
 	protected:
 		UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class USpringArmComponent* _cameraBoom = nullptr;
@@ -38,16 +36,11 @@ class LDJ43_API AMainCharacter : public ACharacter
 
 		UCameraComponent const* GetCameraComponent();
 
-		void SetMaxHP(float _maxHp);
 		void SetWeapon(const FString& name, bool isRight = true);
-
 
 		void Tick(float DeltaTime) override;
 
 		void UseItem();
-
-		void LAttack();
-		void RAttack();
 
 		void Jump() override;
 };
