@@ -14,10 +14,12 @@ class LDJ43_API AMainCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-	UItemComponentBase* _item = nullptr;
+	UItemComponentBase*		_item = nullptr;
 
-	UWeaponComponentBase* _lWeapon = nullptr;
-	UWeaponComponentBase* _rWeapon = nullptr;
+	UWeaponComponentBase*	_lWeapon = nullptr;
+	UWeaponComponentBase*	_rWeapon = nullptr;
+
+	bool					_isAttacking = false;
 
 protected:
 	void BeginPlay() override;
