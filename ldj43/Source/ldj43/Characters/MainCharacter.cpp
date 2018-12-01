@@ -1,5 +1,6 @@
 #include "MainCharacter.h"
-
+#include "Components/SkeletalMeshComponent.h"
+#include "Game/ArenaGameMode.h"
 
 AMainCharacter::AMainCharacter()
 {
@@ -19,6 +20,25 @@ void AMainCharacter::SetMaxHP(float _maxHp)
 
 	if (pState->hp > pState->maxHp)
 		pState->hp = pState->maxHp;
+}
+void AMainCharacter::SetWeapon(const FString& name, bool isRight)
+{
+	auto gm = Cast<AGlobalGameMode>(GetWorld()->GetAuthGameMode());
+
+	if (isRight)
+	{
+		if (_rWeapon)
+			gm->FreeWeapon(_rWeapon);
+
+		_rWeapon = gm->GetWeapon("r" + name);
+	}
+	else
+	{
+		if (_lWeapon)
+			gm->FreeWeapon(_lWeapon);
+
+		_lWeapon = gm->GetWeapon("l" + name);
+	}
 }
 
 void AMainCharacter::Tick(float DeltaTime)

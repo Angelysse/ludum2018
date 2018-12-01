@@ -26,6 +26,8 @@ public:
 	AMainCharacter();
 
 	void SetMaxHP(float _maxHp);
+	void SetWeapon(const FString& name, bool isRight = true);
+
 
 	void Tick(float DeltaTime) override;
 
