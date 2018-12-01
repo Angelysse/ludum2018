@@ -1,8 +1,10 @@
 #include "LAttackState.h"
 
+#include "Characters/GlobalCharacter.h"
+
 void LAttackState::onEnterState()
 {
-	//Do something
+	_chara->canAttack = false;
 }
 
 void LAttackState::onExitState()
