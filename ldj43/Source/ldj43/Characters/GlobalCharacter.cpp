@@ -38,6 +38,10 @@ uint8 AGlobalCharacter::GetState() const
 {
 	return _sMachine.getState();
 }
+void AGlobalCharacter::SetState(uint8 state)
+{
+	_sMachine.switchTo(static_cast<StateType>(state));
+}
 
 void AGlobalCharacter::SetMaxHP(float _maxHp)
 {

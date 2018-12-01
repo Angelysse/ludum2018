@@ -9,6 +9,7 @@
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 
 #include "MainCharacter.generated.h"
 
@@ -44,4 +45,8 @@ class LDJ43_API AMainCharacter : public AGlobalCharacter
 		void StartJump();
 		UFUNCTION(BlueprintCallable, Category = "Player")
 		void EndJump();
+		UFUNCTION(BlueprintCallable)
+		void SetupThirdPersonCamera();
+		UFUNCTION(BlueprintCallable)
+		void SetupFirstPersonCamera();
 };
