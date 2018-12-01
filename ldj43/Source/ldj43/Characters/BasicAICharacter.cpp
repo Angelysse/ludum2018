@@ -11,24 +11,9 @@ ABasicAICharacter::ABasicAICharacter()
 
 }
 
-// Called when the game starts or when spawned
-void ABasicAICharacter::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
 // Called every frame
 void ABasicAICharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
-
-// Called to bind functionality to input
-void ABasicAICharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-

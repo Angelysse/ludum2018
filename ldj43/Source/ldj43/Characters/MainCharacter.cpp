@@ -78,27 +78,27 @@ void AMainCharacter::UseItem()
 		_item->Use();
 }
 
-void AMainCharacter::LAttack()
-{
-	if (_lWeapon && !_isAttacking)
-	{
-		_isAttacking = true;
-		_lWeapon->Use();
-
-		//_isAttacking = false on end animation
-	}
-}
-
-void AMainCharacter::RAttack()
-{
-	if (_rWeapon && !_isAttacking)
-	{
-		_isAttacking = true;
-		_rWeapon->Use();
-
-		//_isAttacking = false on end animation
-	}
-}
+//void AMainCharacter::LAttack()
+//{
+//	//if (_lWeapon && !_isAttacking)
+//	//{
+//	//	_isAttacking = true;
+//	//	_lWeapon->Use();
+//
+//	//	//_isAttacking = false on end animation
+//	//}
+//}
+//
+//void AMainCharacter::RAttack()
+//{
+//	//if (_rWeapon && !_isAttacking)
+//	//{
+//	//	_isAttacking = true;
+//	//	_rWeapon->Use();
+//
+//	//	//_isAttacking = false on end animation
+//	//}
+//}
 
 void AMainCharacter::StartJump()
 {

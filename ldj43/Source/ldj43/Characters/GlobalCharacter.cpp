@@ -2,8 +2,6 @@
 
 #include "GlobalCharacter.h"
 
-
-// Sets default values
 AGlobalCharacter::AGlobalCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -27,22 +25,12 @@ void AGlobalCharacter::Tick(float DeltaTime)
 
 void AGlobalCharacter::LAttack()
 {
-	if (!_isAttacking)
-	{
-		_isAttacking = true;
-
-		//_isAttacking = false on end animation
-	}
+	//_sMachine.switchTo...
 }
 
 void AGlobalCharacter::RAttack()
 {
-	if (!_isAttacking)
-	{
-		_isAttacking = true;
-
-		//_isAttacking = false on end animation
-	}
+	//_sMachine.switchTo...
 }
 
 void AGlobalCharacter::SetMaxHP(float _maxHp)
