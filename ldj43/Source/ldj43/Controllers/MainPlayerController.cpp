@@ -52,21 +52,21 @@ void AMainPlayerController::setupBasicInputs()
 
 void AMainPlayerController::moveForward(float value)
 {
-	APawn* controlledPawn = GetPawn();
+	AMainCharacter* controlledPawn = Cast<AMainCharacter>(GetPawn());
 
 	if (controlledPawn != nullptr)
 	{
-		controlledPawn->AddMovementInput(controlledPawn->GetActorForwardVector(), value);
+		controlledPawn->AddMovementInput(controlledPawn->GetCameraComponent()->GetForwardVector(), value);
 	}
 }
 
 void AMainPlayerController::moveRight(float value)
 {
-	APawn* controlledPawn = GetPawn();
+	AMainCharacter* controlledPawn = Cast<AMainCharacter>(GetPawn());
 
 	if (controlledPawn != nullptr)
 	{
-		controlledPawn->AddMovementInput(controlledPawn->GetActorRightVector(), value);
+		controlledPawn->AddMovementInput(controlledPawn->GetCameraComponent()->GetRightVector(), value);
 	}
 }
 
@@ -95,11 +95,7 @@ void AMainPlayerController::jump()
 	AMainCharacter* controlledCharacter = Cast<AMainCharacter>(GetPawn());
 
 	if (controlledCharacter != nullptr)
-	{
-		controlledCharacter->Jump();
-	}
-
-	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Emerald, TEXT("AMainPlayerController::jump()"));
+		controlledCharacter->StartJump();
 }
 
 void AMainPlayerController::useLeftWeaponSlot()
@@ -108,7 +104,7 @@ void AMainPlayerController::useLeftWeaponSlot()
 
 	if (controlledCharacter != nullptr)
 	{
-		controlledCharacter->LAttack();
+		//controlledCharacter->LAttack();
 	}
 
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Emerald, TEXT("AMainPlayerController::useLeftWeaponSlot()"));
@@ -120,7 +116,7 @@ void AMainPlayerController::useRightWeaponSlot()
 
 	if (controlledCharacter != nullptr)
 	{
-		controlledCharacter->RAttack();
+		//controlledCharacter->RAttack();
 	}
 
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Emerald, TEXT("AMainPlayerController::useRightWeaponSlot()"));

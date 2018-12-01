@@ -2,6 +2,7 @@
 
 #include "GameFramework/Character.h"
 
+#include "GlobalCharacter.h"
 #include "Game/GlobalPlayerState.h"
 #include "Items/ItemComponentBase.h"
 #include "Weapons/WeaponComponentBase.h"
@@ -13,43 +14,39 @@
 #include "MainCharacter.generated.h"
 
 UCLASS()
-class LDJ43_API AMainCharacter : public ACharacter
+class LDJ43_API AMainCharacter : public AGlobalCharacter
 {
 	GENERATED_BODY()
 
-	UItemComponentBase*		_item = nullptr;
+	private:
+		UItemComponentBase*		_item = nullptr;
 
-	UWeaponComponentBase*	_lWeapon = nullptr;
-	UWeaponComponentBase*	_rWeapon = nullptr;
+		UWeaponComponentBase*	_lWeapon = nullptr;
+		UWeaponComponentBase*	_rWeapon = nullptr;
 
-	bool					_isAttacking = false;
+	protected:
+		UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		class USpringArmComponent* _cameraBoom = nullptr;
 
-protected:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class USpringArmComponent* _cameraBoom = nullptr;
+		UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		class UCameraComponent* _camera = nullptr;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class UCameraComponent* _camera = nullptr;
+	public:
+		AMainCharacter();
 
-	void BeginPlay() override;
+		UCameraComponent const* GetCameraComponent();
 
-public:
-	AMainCharacter();
+		void SetWeapon(const FString& name, bool isRight = true);
 
-	UCameraComponent* GetCameraComponent();
+		void Tick(float DeltaTime) override;
 
-	void SetMaxHP(float _maxHp);
+		void UseItem();
 
-	void Tick(float DeltaTime) override;
-
-	void UseItem();
-
-	void LAttack();
-	void RAttack();
-
-	void Jump() override;
-
-	void SetupFirstPersonCamera();
-	void SetupThirdPersonCamera();
-
+		void StartJump();
+		UFUNCTION(BlueprintCallable, Category = "Player")
+		void EndJump();
+		UFUNCTION(BlueprintCallable)
+		void SetupThirdPersonCamera();
+		UFUNCTION(BlueprintCallable)
+		void SetupFirstPersonCamera();
 };

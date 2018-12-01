@@ -1,4 +1,6 @@
 #include "MainCharacter.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Game/ArenaGameMode.h"
 
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -32,24 +34,29 @@ AMainCharacter::AMainCharacter()
 	SetupThirdPersonCamera();
 }
 
-void AMainCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
-UCameraComponent* AMainCharacter::GetCameraComponent()
+UCameraComponent const* AMainCharacter::GetCameraComponent()
 {
 	return _camera;
 }
 
-void AMainCharacter::SetMaxHP(float _maxHp)
+void AMainCharacter::SetWeapon(const FString& name, bool isRight)
 {
-	auto pState = Cast<AGlobalPlayerState>(PlayerState);
+	auto gm = Cast<AGlobalGameMode>(GetWorld()->GetAuthGameMode());
 
-	pState->maxHp = _maxHp;
+	if (isRight)
+	{
+		if (_rWeapon)
+			gm->FreeWeapon(_rWeapon);
 
-	if (pState->hp > pState->maxHp)
-		pState->hp = pState->maxHp;
+		_rWeapon = gm->GetWeapon("r" + name);
+	}
+	else
+	{
+		if (_lWeapon)
+			gm->FreeWeapon(_lWeapon);
+
+		_lWeapon = gm->GetWeapon("l" + name);
+	}
 }
 
 void AMainCharacter::Tick(float DeltaTime)
@@ -63,32 +70,36 @@ void AMainCharacter::UseItem()
 		_item->Use();
 }
 
-void AMainCharacter::LAttack()
-{
-	if (_lWeapon && !_isAttacking)
-	{
-		_isAttacking = true;
-		_lWeapon->Use();
+//void AMainCharacter::LAttack()
+//{
+//	//if (_lWeapon && !_isAttacking)
+//	//{
+//	//	_isAttacking = true;
+//	//	_lWeapon->Use();
+//
+//	//	//_isAttacking = false on end animation
+//	//}
+//}
+//
+//void AMainCharacter::RAttack()
+//{
+//	//if (_rWeapon && !_isAttacking)
+//	//{
+//	//	_isAttacking = true;
+//	//	_rWeapon->Use();
+//
+//	//	//_isAttacking = false on end animation
+//	//}
+//}
 
-		//_isAttacking = false on end animation
-	}
+void AMainCharacter::StartJump()
+{
+	_sMachine.switchTo(StateType::JUMP);
 }
 
-void AMainCharacter::RAttack()
+void AMainCharacter::EndJump()
 {
-	if (_rWeapon && !_isAttacking)
-	{
-		_isAttacking = true;
-		_rWeapon->Use();
-
-		//_isAttacking = false on end animation
-	}
-}
-
-void AMainCharacter::Jump()
-{
-	if (Cast<AGlobalPlayerState>(PlayerState)->canJump && CanJump())
-		Super::Jump();
+	_sMachine.switchTo(StateType::IDLE);
 }
 
 void AMainCharacter::SetupFirstPersonCamera()
