@@ -27,6 +27,9 @@ public:
 
 	float hp = maxHp;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player")
+	float basicAttackPower = 1.0f;
+
 	//Constructors
 	AGlobalCharacter();
 
