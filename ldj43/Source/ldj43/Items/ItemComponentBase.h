@@ -15,5 +15,5 @@ protected:
 public:	
 	UItemComponentBase();
 
-	virtual void Use() = 0;
+	virtual void Use() {};
 };

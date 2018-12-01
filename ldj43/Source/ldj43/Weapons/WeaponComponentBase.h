@@ -13,5 +13,5 @@ protected:
 	float _damages = 10.0f;
 
 public:
-	virtual void Use() = 0;
+	virtual void Use() {};
 };
