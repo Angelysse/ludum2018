@@ -1,20 +1,40 @@
 #include "StateMachine.h"
 
-StateMachine::StateMachine(IState* initState):
-	_currentState{initState}
+#include "IdleRunState.h"
+#include "JumpState.h"
+#include "AttackState.h"
+
+StateMachine::StateMachine(StateType initState):
+	_currentState{nullptr}
 {
-	if (_currentState != nullptr)
-	{
-		_currentState->onEnterState();
-	}
+	initStates();
+	
+	_currentState = _states[static_cast<uint8>(initState)];
+	_currentState->onEnterState();
 }
 
-bool StateMachine::switchTo(IState* nextState)
+StateMachine::~StateMachine()
 {
-	if (_currentState && nextState && _currentState->canSwitchTo(nextState->getState()))
+	delete _states[0];
+	delete _states[1];
+	delete _states[2];
+}
+
+void StateMachine::initStates()
+{
+	_states[0] = new IdleRunState();
+	_states[1] = new AttackState();
+	_states[2] = new JumpState();
+}
+
+bool StateMachine::switchTo(StateType nextState)
+{
+	IState* state = _states[static_cast<uint8>(nextState)];
+
+	if (_currentState && _currentState->canSwitchTo(state->getState()))
 	{
 		_currentState->onExitState();
-		_currentState = nextState;
+		_currentState = state;
 		_currentState->onEnterState();
 
 		return true;
@@ -22,8 +42,3 @@ bool StateMachine::switchTo(IState* nextState)
 
 	return false;
 }
-
-//Idle -> Jump
-//Jump -> Idle
-//Idle -> Attack
-//Attack -> Idle

@@ -7,11 +7,18 @@ class StateMachine
 	private:
 		//Variables
 		IState*		_currentState;
+		IState*		_states[4];
+
+		//Methods
+		void initStates();
 
 	public:
 		//Constructors
-		StateMachine(IState* initState);
+		StateMachine(StateType initState);
+
+		//Destructor
+		~StateMachine();
 
 		//Methods
-		bool switchTo(IState* nextState);
+		bool switchTo(StateType nextState);
 };

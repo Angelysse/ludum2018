@@ -10,7 +10,7 @@ void JumpState::onExitState()
 	//Do something
 }
 
-bool JumpState::canSwitchTo(uint8 newState)
+bool JumpState::canSwitchTo(uint8 newState) const
 {
 	return newState == static_cast<uint8>(StateType::IDLE);
 }
