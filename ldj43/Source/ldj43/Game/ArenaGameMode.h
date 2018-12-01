@@ -22,6 +22,8 @@ class LDJ43_API AArenaGameMode : public AGlobalGameMode
 		//Custom Methods
 		void initAIManager();
 
+		void spawnWave(uint32 nbEnemies);
+
 	public:
 		//Overriden Methods
 		virtual void InitGame(FString const& MapName, FString const& Options, FString& ErrorMessage) override;

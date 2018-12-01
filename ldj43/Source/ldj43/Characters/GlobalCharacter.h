@@ -22,13 +22,16 @@ protected:
 
 public:
 	//Variables
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	float maxHp = 100.0f;
 
 	float hp = maxHp;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	float basicAttackPower = 1.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+	float attackCooldown = 0.1f;
 
 	//Constructors
 	AGlobalCharacter();

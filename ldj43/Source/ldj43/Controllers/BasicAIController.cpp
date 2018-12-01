@@ -33,6 +33,8 @@ void ABasicAIController::Possess(APawn* InPawn)
 		RunBehaviorTree(bot->_botBehaviorTree);
 
 		initDefaultBBValues();
+
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "RIP");
 	}
 }
 
@@ -48,6 +50,8 @@ void ABasicAIController::initDefaultBBValues()
 	{
 		setTargetPawn(playerPawn);
 	}
+
+	setIsActive(true);
 }
 
 //-----------------

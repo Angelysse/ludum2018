@@ -69,8 +69,6 @@ bool AAIManager::spawnEnemy(TSubclassOf<ABasicAICharacter>& enemyType)
 		return true;
 	}
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Emerald, TEXT("RIP"));
-
 	return false;
 }
 

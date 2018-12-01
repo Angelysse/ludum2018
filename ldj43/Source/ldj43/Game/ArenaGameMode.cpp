@@ -22,10 +22,7 @@ void AArenaGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (_aiManager->spawnRandomEnemy())
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Emerald, "C'est censé marcher");
-	}
+	spawnWave(1);
 }
 
 //=====================
@@ -43,3 +40,23 @@ void AArenaGameMode::initAIManager()
 	if (_aiManager == nullptr)
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Emerald, TEXT("Missing AiManager in the level"));
 }
+
+//-----------------
+
+void AArenaGameMode::spawnWave(uint32 nbEnemies)
+{
+	if (_aiManager != nullptr)
+	{
+		uint32 count = 0;
+
+		while (count != nbEnemies)
+		{
+			if (_aiManager->spawnRandomEnemy())	//Might want to pass position as argument
+			{
+				count++;
+			}
+		}
+	}
+}
+
+//-----------------
