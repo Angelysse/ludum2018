@@ -26,6 +26,8 @@ class LDJ43_API AArenaGameMode : public AGlobalGameMode
 	
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
+	int _mapMaxWallSize = 10;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
 	int _mapMinWalls = 25;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
 	int _mapMaxWalls = 125;
