@@ -3,19 +3,19 @@
 
 void UMainAnimInstance::NativeInitializeAnimation()
 {
-	_charac = Cast<AMainCharacter>(TryGetPawnOwner());
+	_chara = Cast<AMainCharacter>(TryGetPawnOwner());
 }
 
 void UMainAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
-	if (!_charac)
+	if (!_chara)
 		return;
 
-	FVector velocity = _charac->GetVelocity();
-	FRotator worldRotation = _charac->GetActorRotation();
+	FVector velocity = _chara->GetVelocity();
+	FRotator worldRotation = _chara->GetActorRotation();
 
 	FVector2D movement = (FVector2D)worldRotation.UnrotateVector(velocity);
 
 	direction = movement.GetSafeNormal();
-	relativeSpeed = movement.Size() / _charac->GetMovementComponent()->GetMaxSpeed();
+	relativeSpeed = movement.Size() / _chara->GetMovementComponent()->GetMaxSpeed();
 }

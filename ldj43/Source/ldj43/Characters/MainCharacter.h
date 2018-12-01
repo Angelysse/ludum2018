@@ -8,6 +8,7 @@
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "StateMachine/StateMachine.h"
 
 #include "MainCharacter.generated.h"
 
@@ -22,6 +23,7 @@ class LDJ43_API AMainCharacter : public ACharacter
 		UWeaponComponentBase*	_lWeapon = nullptr;
 		UWeaponComponentBase*	_rWeapon = nullptr;
 
+		StateMachine _sMachine = StateMachine(this);
 	protected:
 		UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		class USpringArmComponent* _cameraBoom = nullptr;
@@ -38,9 +40,14 @@ class LDJ43_API AMainCharacter : public ACharacter
 
 		void SetWeapon(const FString& name, bool isRight = true);
 
+		UFUNCTION(BlueprintCallable, Category = "Player")
+		uint8 GetState() const;
+
 		void Tick(float DeltaTime) override;
 
 		void UseItem();
 
-		void Jump() override;
+		void StartJump();
+		UFUNCTION(BlueprintCallable, Category = "Player")
+		void EndJump();
 };

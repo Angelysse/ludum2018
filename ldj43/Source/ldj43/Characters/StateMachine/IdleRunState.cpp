@@ -1,4 +1,7 @@
 #include "IdleRunState.h"
+#include "Engine/World.h"
+#include "Game/GlobalPlayerState.h"
+#include "Characters/MainCharacter.h"
 
 void IdleRunState::onEnterState()
 {
@@ -12,8 +15,8 @@ void IdleRunState::onExitState()
 
 bool IdleRunState::canSwitchTo(uint8 newState) const
 {
-	return newState == static_cast<uint8>(StateType::ATTACK) ||
-			newState == static_cast<uint8>(StateType::JUMP);
+	return newState == static_cast<uint8>(StateType::JUMP) && Cast<AGlobalPlayerState>(_chara->PlayerState)->canJump && _chara->CanJump()
+		|| newState == static_cast<uint8>(StateType::ATTACK);
 }
 
 uint8 IdleRunState::getState() const

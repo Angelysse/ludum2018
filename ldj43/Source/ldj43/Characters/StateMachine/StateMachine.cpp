@@ -1,13 +1,10 @@
 #include "StateMachine.h"
+#include "Characters/MainCharacter.h"
 
-#include "IdleRunState.h"
-#include "JumpState.h"
-#include "AttackState.h"
-
-StateMachine::StateMachine(StateType initState):
-	_currentState{nullptr}
+StateMachine::StateMachine(AMainCharacter* chara, StateType initState):
+	_currentState{ nullptr }
 {
-	initStates();
+	initStates(chara);
 	
 	_currentState = _states[static_cast<uint8>(initState)];
 	_currentState->onEnterState();
@@ -20,11 +17,11 @@ StateMachine::~StateMachine()
 	delete _states[2];
 }
 
-void StateMachine::initStates()
+void StateMachine::initStates(AMainCharacter* chara)
 {
-	_states[0] = new IdleRunState();
-	_states[1] = new AttackState();
-	_states[2] = new JumpState();
+	_states[0] = new IdleRunState(chara);
+	_states[1] = new AttackState(chara);
+	_states[2] = new JumpState(chara);
 }
 
 bool StateMachine::switchTo(StateType nextState)
@@ -41,4 +38,9 @@ bool StateMachine::switchTo(StateType nextState)
 	}
 
 	return false;
+}
+
+uint8 StateMachine::getState() const
+{
+	return _currentState->getState();
 }

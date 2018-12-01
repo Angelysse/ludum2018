@@ -9,12 +9,19 @@ enum class StateType : uint8
 
 class IState
 {
-	public:
-		//Methods
-		virtual void onEnterState() = 0;
-		virtual void onExitState() = 0;
-		virtual bool canSwitchTo(uint8 newState) const = 0;
+protected:
+	class AMainCharacter* _chara = nullptr;
 
-		//Getters
-		virtual uint8 getState() const = 0;
+public:
+	IState(AMainCharacter* chara) : _chara{ chara }
+	{
+	}
+
+	//Methods
+	virtual void onEnterState() = 0;
+	virtual void onExitState() = 0;
+	virtual bool canSwitchTo(uint8 newState) const = 0;
+
+	//Getters
+	virtual uint8 getState() const = 0;
 };

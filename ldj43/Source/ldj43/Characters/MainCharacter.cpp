@@ -4,7 +4,7 @@
 
 #include "GameFramework/CharacterMovementComponent.h"
 
-AMainCharacter::AMainCharacter()
+AMainCharacter::AMainCharacter() : _sMachine{ this }
 {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -33,6 +33,8 @@ AMainCharacter::AMainCharacter()
 void AMainCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	_sMachine.switchTo(StateType::IDLE);
 }
 
 UCameraComponent const* AMainCharacter::GetCameraComponent()
@@ -60,6 +62,11 @@ void AMainCharacter::SetWeapon(const FString& name, bool isRight)
 	}
 }
 
+uint8 AMainCharacter::GetState() const
+{
+	return _sMachine.getState();
+}
+
 void AMainCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -71,8 +78,34 @@ void AMainCharacter::UseItem()
 		_item->Use();
 }
 
-void AMainCharacter::Jump()
+void AMainCharacter::LAttack()
 {
-	if (Cast<AGlobalPlayerState>(PlayerState)->canJump && CanJump())
-		Super::Jump();
+	if (_lWeapon && !_isAttacking)
+	{
+		_isAttacking = true;
+		_lWeapon->Use();
+
+		//_isAttacking = false on end animation
+	}
+}
+
+void AMainCharacter::RAttack()
+{
+	if (_rWeapon && !_isAttacking)
+	{
+		_isAttacking = true;
+		_rWeapon->Use();
+
+		//_isAttacking = false on end animation
+	}
+}
+
+void AMainCharacter::StartJump()
+{
+	_sMachine.switchTo(StateType::JUMP);
+}
+
+void AMainCharacter::EndJump()
+{
+	_sMachine.switchTo(StateType::IDLE);
 }
