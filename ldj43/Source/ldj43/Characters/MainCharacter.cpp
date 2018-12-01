@@ -4,7 +4,7 @@
 
 #include "GameFramework/CharacterMovementComponent.h"
 
-AMainCharacter::AMainCharacter() : _sMachine{ this }
+AMainCharacter::AMainCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -30,13 +30,6 @@ AMainCharacter::AMainCharacter() : _sMachine{ this }
 	_camera->bUsePawnControlRotation = false;
 }
 
-void AMainCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-
-	_sMachine.switchTo(StateType::IDLE);
-}
-
 UCameraComponent const* AMainCharacter::GetCameraComponent()
 {
 	return _camera;
@@ -60,11 +53,6 @@ void AMainCharacter::SetWeapon(const FString& name, bool isRight)
 
 		_lWeapon = gm->GetWeapon("l" + name);
 	}
-}
-
-uint8 AMainCharacter::GetState() const
-{
-	return _sMachine.getState();
 }
 
 void AMainCharacter::Tick(float DeltaTime)

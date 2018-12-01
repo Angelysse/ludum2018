@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-
+#include "StateMachine/StateMachine.h"
 
 #include "GlobalCharacter.generated.h"
 
@@ -14,6 +14,9 @@ class LDJ43_API AGlobalCharacter : public ACharacter
 	GENERATED_BODY()
 
 protected:
+	//Variables
+	StateMachine	_sMachine = StateMachine(this);
+
 	//Overriden Methods
 	virtual void BeginPlay() override;
 
@@ -33,6 +36,9 @@ public:
 	//Custom Methods
 	virtual void LAttack();
 	virtual void RAttack();
+
+	UFUNCTION(BlueprintCallable, Category = "Player")
+	uint8 GetState() const;
 
 	void SetMaxHP(float _maxHp);
 };
