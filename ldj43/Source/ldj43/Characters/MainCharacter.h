@@ -8,6 +8,7 @@
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 
 #include "MainCharacter.generated.h"
 
@@ -47,4 +48,8 @@ public:
 	void RAttack();
 
 	void Jump() override;
+
+	void SetupFirstPersonCamera();
+	void SetupThirdPersonCamera();
+
 };
