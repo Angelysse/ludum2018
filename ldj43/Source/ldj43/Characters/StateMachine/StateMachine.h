@@ -13,11 +13,11 @@ class StateMachine
 		IState*		_states[5];
 
 		//Methods
-		void initStates(AMainCharacter* chara);
+		void initStates(AGlobalCharacter* chara);
 
 	public:
 		//Constructors
-		StateMachine(AMainCharacter* chara, StateType initState = StateType::IDLE);
+		StateMachine(AGlobalCharacter* chara, StateType initState = StateType::IDLE);
 
 		//Destructor
 		~StateMachine();

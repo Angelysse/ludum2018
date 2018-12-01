@@ -11,10 +11,10 @@ enum class StateType : uint8
 class IState
 {
 protected:
-	class AMainCharacter* _chara = nullptr;
+	class AGlobalCharacter* _chara = nullptr;
 
 public:
-	IState(AMainCharacter* chara) : _chara{ chara }
+	IState(AGlobalCharacter* chara) : _chara{ chara }
 	{
 	}
 

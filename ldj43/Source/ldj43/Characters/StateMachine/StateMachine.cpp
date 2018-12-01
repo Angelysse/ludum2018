@@ -1,7 +1,7 @@
 #include "StateMachine.h"
-#include "Characters/MainCharacter.h"
+#include "Characters/GlobalCharacter.h"
 
-StateMachine::StateMachine(AMainCharacter* chara, StateType initState):
+StateMachine::StateMachine(AGlobalCharacter* chara, StateType initState):
 	_currentState{ nullptr }
 {
 	initStates(chara);
@@ -18,7 +18,7 @@ StateMachine::~StateMachine()
 	delete _states[3];
 }
 
-void StateMachine::initStates(AMainCharacter* chara)
+void StateMachine::initStates(AGlobalCharacter* chara)
 {
 	_states[0] = new IdleRunState(chara);
 	_states[1] = new RAttackState(chara);
