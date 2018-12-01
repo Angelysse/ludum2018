@@ -9,11 +9,21 @@ class LDJ43_API UItemComponentBase : public UActorComponent
 {
 	GENERATED_BODY()
 
-protected:
-	virtual void BeginPlay() override;
+	protected:
+		//Variables
+		FTimerHandle	_timerHandle;
 
-public:	
-	UItemComponentBase();
+		float			_cooldown		= 0.0f;
+		bool			_isInCooldown	= false;
 
-	virtual void Use() {};
+		//Overriden Methods
+		virtual void BeginPlay() override;
+		virtual void EndPlay(EEndPlayReason::Type const EndPlayReason) override;
+
+	public:
+		//Constructors
+		UItemComponentBase();
+
+		//Custom Methods
+		virtual void Use();
 };

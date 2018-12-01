@@ -61,14 +61,24 @@ void AMainCharacter::UseItem()
 
 void AMainCharacter::LAttack()
 {
-	if (_lWeapon)
+	if (_lWeapon && !_isAttacking)
+	{
+		_isAttacking = true;
 		_lWeapon->Use();
+
+		//_isAttacking = false on end animation
+	}
 }
 
 void AMainCharacter::RAttack()
 {
-	if (_rWeapon)
+	if (_rWeapon && !_isAttacking)
+	{
+		_isAttacking = true;
 		_rWeapon->Use();
+
+		//_isAttacking = false on end animation
+	}
 }
 
 void AMainCharacter::Jump()
