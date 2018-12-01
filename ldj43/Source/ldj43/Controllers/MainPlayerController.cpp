@@ -104,7 +104,7 @@ void AMainPlayerController::useLeftWeaponSlot()
 
 	if (controlledCharacter != nullptr)
 	{
-		//controlledCharacter->LAttack();
+		controlledCharacter->LAttack();
 	}
 
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Emerald, TEXT("AMainPlayerController::useLeftWeaponSlot()"));
@@ -116,7 +116,7 @@ void AMainPlayerController::useRightWeaponSlot()
 
 	if (controlledCharacter != nullptr)
 	{
-		//controlledCharacter->RAttack();
+		controlledCharacter->RAttack();
 	}
 
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Emerald, TEXT("AMainPlayerController::useRightWeaponSlot()"));

@@ -3,8 +3,8 @@
 enum class StateType : uint8
 {
 	IDLE = 0,
-	RATTACK,
 	LATTACK,
+	RATTACK,
 	JUMP
 };
 
