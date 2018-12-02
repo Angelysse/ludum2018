@@ -36,17 +36,33 @@ class LDJ43_API AMainCharacter : public AGlobalCharacter
 
 		UCameraComponent const* GetCameraComponent();
 
+		void SetItem(const FString& name);
 		void SetWeapon(const FString& name, bool isRight = true);
 
 		void Tick(float DeltaTime) override;
 
+		virtual bool canHit(AGlobalCharacter const* other) override;
+
 		void UseItem();
 
 		void StartJump();
+
+		virtual void LAttack() override;
+
+		virtual void RAttack() override;
+
 		UFUNCTION(BlueprintCallable, Category = "Player")
 		void EndJump();
+
 		UFUNCTION(BlueprintCallable)
 		void SetupThirdPersonCamera();
+
 		UFUNCTION(BlueprintCallable)
 		void SetupFirstPersonCamera();
+
+		virtual float getAttackPower(bool isRightSlot) const override;
+
+		virtual void onTakeDamageFrom(AGlobalCharacter const* other) override;
+
+		virtual void onDie(AGlobalCharacter const* killedBy) override;
 };

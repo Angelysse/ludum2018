@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Runtime/Core/Public/Math/Vector.h"
 #include "GameFramework/Actor.h"
 #include "Characters/BasicAICharacter.h"
 
@@ -33,6 +34,9 @@ protected:
 	//Overriden Methods
 	virtual void BeginPlay() override;
 
+	//Custom Methods
+	FVector generateRandomLocation() const;
+
 public:	
 	//Constructors
 	AAIManager();
@@ -43,4 +47,7 @@ public:
 	//Custom Methods
 	bool spawnEnemy(TSubclassOf<ABasicAICharacter>& enemyType);
 	bool spawnRandomEnemy();
+	void spawnWave(uint32 nbEnemies);
+	
+	bool areAllAIDead() const;
 };

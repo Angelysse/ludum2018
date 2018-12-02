@@ -52,6 +52,8 @@ void ABasicAIController::initDefaultBBValues()
 	}
 
 	setIsActive(true);
+	setCanAttack(true);
+	setIsAttacking(false);
 }
 
 //-----------------
@@ -66,4 +68,18 @@ void ABasicAIController::setTargetPawn(APawn* targetPawn)
 void ABasicAIController::setIsActive(bool isActive)
 {
 	Blackboard->SetValueAsBool(TEXT("IsActive"), isActive);
+}
+
+//-----------------
+
+void ABasicAIController::setCanAttack(bool canAttack)
+{
+	Blackboard->SetValueAsBool(TEXT("CanAttack"), canAttack);
+}
+
+//-----------------
+
+void ABasicAIController::setIsAttacking(bool isAttacking)
+{
+	Blackboard->SetValueAsBool(TEXT("IsAttacking"), isAttacking);
 }

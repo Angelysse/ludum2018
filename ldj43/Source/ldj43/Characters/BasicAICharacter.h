@@ -29,4 +29,10 @@ class LDJ43_API ABasicAICharacter : public AGlobalCharacter
 
 		//Overriden Methods
 		virtual void Tick(float DeltaTime) override;
+
+		//Custom Methods
+		virtual void startAttack() override;
+		virtual void endAttack() override;
+		virtual void endAttackCooldown() override;
+		virtual bool canHit(AGlobalCharacter const* other) override;
 };

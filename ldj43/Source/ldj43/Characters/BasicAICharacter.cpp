@@ -2,6 +2,9 @@
 
 #include "BasicAICharacter.h"
 
+#include "Controllers/BasicAIController.h"
+#include "MainCharacter.h"
+
 //============================
 //Constructors
 
@@ -30,3 +33,48 @@ void ABasicAICharacter::Tick(float DeltaTime)
 
 //============================
 //Custom Methods
+
+void ABasicAICharacter::startAttack()
+{
+	AGlobalCharacter::startAttack();
+
+	ABasicAIController* controller = Cast<ABasicAIController>(GetController());
+	if (controller != nullptr)
+	{
+		controller->setCanAttack(false);
+		controller->setIsAttacking(true);
+	}
+}
+
+//--------------------------
+
+void ABasicAICharacter::endAttack()
+{
+	AGlobalCharacter::endAttack();
+
+	ABasicAIController* controller = Cast<ABasicAIController>(GetController());
+	if (controller != nullptr)
+	{
+		controller->setIsAttacking(false);
+	}
+}
+
+//--------------------------
+
+void ABasicAICharacter::endAttackCooldown()
+{
+	AGlobalCharacter::endAttackCooldown();
+
+	ABasicAIController* controller = Cast<ABasicAIController>(GetController());
+	if (controller != nullptr)
+	{
+		controller->setCanAttack(true);
+	}
+}
+
+//--------------------------
+
+bool ABasicAICharacter::canHit(AGlobalCharacter const* other)
+{
+	return Cast<AMainCharacter>(other) != nullptr;
+}

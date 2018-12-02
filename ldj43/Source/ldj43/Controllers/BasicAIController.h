@@ -28,4 +28,6 @@ class LDJ43_API ABasicAIController : public AAIController
 		void	initDefaultBBValues();
 		void	setTargetPawn(APawn* targetPawn);
 		void	setIsActive(bool isActive);
+		void	setCanAttack(bool canAttack);
+		void	setIsAttacking(bool isAttacking);
 };

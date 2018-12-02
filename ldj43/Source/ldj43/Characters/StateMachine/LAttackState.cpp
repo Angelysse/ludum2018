@@ -5,11 +5,12 @@
 void LAttackState::onEnterState()
 {
 	_chara->canAttack = false;
+	_chara->startAttack();
 }
 
 void LAttackState::onExitState()
 {
-	//Do something
+	_chara->endAttack();
 }
 
 bool LAttackState::canSwitchTo(uint8 newState) const
