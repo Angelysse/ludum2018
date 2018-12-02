@@ -76,6 +76,7 @@ public:
 
 	void GenerateMap();
 	void GenerateSacrifice();
+	UFUNCTION(BlueprintCallable)
 	void ResetTimeDelation();
 
 	UFUNCTION(BlueprintCallable)
