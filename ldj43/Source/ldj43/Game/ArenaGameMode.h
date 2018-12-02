@@ -77,4 +77,12 @@ public:
 	//Custom Methods
 	UFUNCTION()
 	void checkRoundProgression(AGlobalCharacter* deadChar, AGlobalCharacter* killedBy);
+
+	UFUNCTION(BlueprintCallable)
+	int GetCurrentRound() { return _currentRound.roundNumber; }
+	UFUNCTION(BlueprintCallable)
+	int GetCurrentWave() { return _currentRound.currentWave; }
+	UFUNCTION(BlueprintCallable)
+	int GetMaxWave() { return _currentRound.totalWaves; }
+
 };

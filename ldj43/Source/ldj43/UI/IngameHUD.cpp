@@ -34,6 +34,7 @@ void AIngameHUD::BeginPlay()
 		_sacrificeSelectorWidget->SetPlayer(_player);
 		_sacrificeSelectorWidget->SetGameState(_gamestate);
 		_sacrificeSelectorWidget->AddToViewport();
+		_sacrificeSelectorWidget->SetVisibility(ESlateVisibility::Hidden);
 
 		SetWaveNumber(0);
 		SetRoundNumber(0);
@@ -53,4 +54,5 @@ void AIngameHUD::SetRoundNumber(int number)
 void AIngameHUD::NewSacrifice(USacrifice* bonus1, USacrifice* malus1, USacrifice* bonus2, USacrifice* malus2)
 {
 	_sacrificeSelectorWidget->Activate(bonus1, malus1, bonus2, malus2);
+	_sacrificeSelectorWidget->SetVisibility(ESlateVisibility::Visible);
 }

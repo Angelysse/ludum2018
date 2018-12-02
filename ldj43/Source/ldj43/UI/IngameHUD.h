@@ -36,5 +36,6 @@ public:
 	void SetWaveNumber(int number);
 	void SetRoundNumber(int number);
 
+	UFUNCTION(BlueprintCallable)
 	void NewSacrifice(USacrifice* bonus1, USacrifice* malus1, USacrifice* bonus2, USacrifice* malus2);
 };
