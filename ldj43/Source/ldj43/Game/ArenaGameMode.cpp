@@ -62,7 +62,7 @@ void AArenaGameMode::GenerateMap()
 
 		// Spawn Block.
 		auto actor = GetWorld()->SpawnActor<ACubeActor>(FVector(float(posX) - midX, float(posY) - midY, 270.0), FRotator::ZeroRotator);
-		actor->SetActorScale3D(FVector(sizeX, sizeY, 5));
+		actor->ScaleWall(FVector(sizeX, sizeY, 5));
 		actor->AttachToActor(_wallsRoot, FAttachmentTransformRules::KeepWorldTransform);
 	}
 }

@@ -29,3 +29,9 @@ void ACubeActor::BeginPlay()
 	if(_mat)
 		Cast<UStaticMeshComponent>(RootComponent)->SetMaterial(0, UMaterialInstanceDynamic::Create(_mat, this));
 }
+
+void ACubeActor::ScaleWall(const FVector& scale)
+{
+	SetActorScale3D(scale);
+	//Cast<UStaticMeshComponent>(RootComponent)->GetMaterial(0)->SET_TILING_FU_UE4
+}

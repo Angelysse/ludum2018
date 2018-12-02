@@ -14,4 +14,6 @@ public:
 	ACubeActor();
 
 	void BeginPlay();
+
+	void ScaleWall(const FVector& scale);
 };
