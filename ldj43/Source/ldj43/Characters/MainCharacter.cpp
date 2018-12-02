@@ -61,8 +61,11 @@ void AMainCharacter::SetWeapon(const FString& name, bool isRight)
 		if (_rWeapon)
 			gm->FreeWeapon(_rWeapon);
 
-		if(!name.IsEmpty())
+		if (!name.IsEmpty())
+		{
 			_rWeapon = gm->GetWeapon("r" + name);
+			_rWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "hand_r");
+		}
 	}
 	else
 	{
@@ -70,7 +73,10 @@ void AMainCharacter::SetWeapon(const FString& name, bool isRight)
 			gm->FreeWeapon(_lWeapon);
 
 		if (!name.IsEmpty())
+		{
 			_lWeapon = gm->GetWeapon("l" + name);
+			_lWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "hand_l");
+		}
 	}
 }
 

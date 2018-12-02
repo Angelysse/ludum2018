@@ -5,7 +5,7 @@
 #include "GlobalCharacter.h"
 #include "Game/GlobalPlayerState.h"
 #include "Items/ItemComponentBase.h"
-#include "Weapons/WeaponComponentBase.h"
+#include "Weapons/Weapon.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -21,8 +21,8 @@ class LDJ43_API AMainCharacter : public AGlobalCharacter
 	private:
 		UItemComponentBase*		_item = nullptr;
 
-		UWeaponComponentBase*	_lWeapon = nullptr;
-		UWeaponComponentBase*	_rWeapon = nullptr;
+		AWeapon*	_lWeapon = nullptr;
+		AWeapon*	_rWeapon = nullptr;
 
 	protected:
 		UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
