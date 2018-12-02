@@ -85,5 +85,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Player")
 	void SetState(uint8 state);
 
+	float GetMaxHP() const;
 	void SetMaxHP(float _maxHp);
 };

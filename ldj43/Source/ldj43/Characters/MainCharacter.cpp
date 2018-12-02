@@ -43,6 +43,11 @@ UCameraComponent const* AMainCharacter::GetCameraComponent()
 	return _camera;
 }
 
+void AMainCharacter::SetItem(const FString& name)
+{
+
+}
+
 void AMainCharacter::SetWeapon(const FString& name, bool isRight)
 {
 	auto gm = Cast<AGlobalGameMode>(GetWorld()->GetAuthGameMode());
