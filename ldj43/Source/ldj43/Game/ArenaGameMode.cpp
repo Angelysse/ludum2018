@@ -2,6 +2,7 @@
 
 #include "ArenaGameState.h"
 #include "LD/CubeActor.h"
+#include "UI/IngameHUD.h"
 
 #include "EngineUtils.h"
 #include "EngineGlobals.h"
@@ -33,10 +34,12 @@ void AArenaGameMode::BeginPlay()
 
 void AArenaGameMode::Tick(float DeltaSeconds)
 {
+	Super::Tick(DeltaSeconds);
+
 	float time = UGameplayStatics::GetGlobalTimeDilation(GetWorld());
 
-	if (!FMath::IsNearlyEqual(time, targetTime))
-		UGameplayStatics::SetGlobalTimeDilation(GetWorld(), FMath::Lerp(slowTime, targetTime, DeltaSeconds * FMath::Sqrt(time)));
+	if (!FMath::IsNearlyEqual(time, _targetTime))
+		UGameplayStatics::SetGlobalTimeDilation(GetWorld(), FMath::Lerp(_targetTime, _prevTime, DeltaSeconds * time));
 }
 
 //-----------------
@@ -82,7 +85,7 @@ void AArenaGameMode::GenerateMap()
 
 void AArenaGameMode::GenerateSacrifice()
 {
-	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 0.4);
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "GENERATE");
 
 	uint32 bIndex1 = FMath::RandRange(0, sacrifices.Num() - 1);
 	uint32 mIndex1 = FMath::RandRange(0, sacrifices.Num() - 1);
@@ -96,12 +99,23 @@ void AArenaGameMode::GenerateSacrifice()
 	while (mIndex2 == bIndex2)
 		mIndex2 = FMath::RandRange(0, sacrifices.Num() - 1);
 
-	targetTime = slowTime;
+	Cast<AIngameHUD>(GetWorld()->GetFirstPlayerController()->GetHUD())->
+		NewSacrifice(sacrifices[bIndex1].GetDefaultObject(), sacrifices[mIndex1].GetDefaultObject(),
+			sacrifices[bIndex2].GetDefaultObject(), sacrifices[mIndex2].GetDefaultObject());
+
+	_prevTime = _targetTime;
+	_targetTime = slowTime;
 }
 
 void AArenaGameMode::ResetTimeDelation()
 {
-	targetTime = 1.0f;
+	_prevTime = _targetTime;
+	_targetTime = 1.0f;
+}
+void AArenaGameMode::TriggerSacrifice(float multiplier)
+{
+	if (FMath::FRandRange(0.0f, 1.0f) < sacrificeRate * multiplier)
+		GenerateSacrifice();
 }
 
 //-----------------

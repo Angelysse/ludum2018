@@ -33,7 +33,7 @@ void AIngameHUD::BeginPlay()
 		_sacrificeSelectorWidget = CreateWidget<USacrificeSelectorWidget>(GetWorld(), _sacrificeSelectorWidgetClass);
 		_sacrificeSelectorWidget->SetPlayer(_player);
 		_sacrificeSelectorWidget->SetGameState(_gamestate);
-		_sacrificeSelectorWidget->AddToViewport();
+		//_sacrificeSelectorWidget->AddToViewport();
 
 		SetWaveNumber(0);
 		SetRoundNumber(0);
