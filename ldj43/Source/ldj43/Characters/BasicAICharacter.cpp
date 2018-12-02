@@ -8,6 +8,8 @@
 
 #include "EngineGlobals.h"
 #include "Engine/Engine.h"
+#include "Engine/World.h"
+#include "TimerManager.h"
 
 //============================
 //Constructors
@@ -83,6 +85,9 @@ void ABasicAICharacter::onDie(AGlobalCharacter* deadChar, AGlobalCharacter* kill
 
 	if (deadChar == this)
 	{
+		FTimerHandle timer;
+		GetWorld()->GetTimerManager().SetTimer(timer, [this]() { Destroy(); }, 10.0f, false);
+
 		ABasicAIController* controller = Cast<ABasicAIController>(GetController());
 		if (controller != nullptr)
 		{

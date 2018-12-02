@@ -24,6 +24,9 @@ protected:
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+	float sacrificeRate = 1.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	FVector color = FVector(1);
 
 	//Variables

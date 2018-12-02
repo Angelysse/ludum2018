@@ -31,15 +31,19 @@ private:
 
 	UFUNCTION()
 	void handleNewWave();
-
-	float targetTime = 1.0f;
+		
+	float _targetTime = 1.0f;
+	float _prevTime = 1.0f;
 
 protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+	float sacrificeRate = 0.1f;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game")
 	TArray<TSubclassOf<USacrifice>> sacrifices;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
-	float slowTime = 0.1f;
+	float slowTime = 0.01f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
 	int _mapMaxWallSize = 10;
@@ -74,6 +78,9 @@ public:
 	void GenerateSacrifice();
 	void ResetTimeDelation();
 
+	UFUNCTION(BlueprintCallable)
+	void TriggerSacrifice(float multiplier = 1.0f);
+
 	void StartPlay() override;
 
 	//Variables
@@ -82,4 +89,12 @@ public:
 	//Custom Methods
 	UFUNCTION()
 	void checkRoundProgression(AGlobalCharacter* deadChar, AGlobalCharacter* killedBy);
+
+	UFUNCTION(BlueprintCallable)
+	int GetCurrentRound() { return _currentRound.roundNumber; }
+	UFUNCTION(BlueprintCallable)
+	int GetCurrentWave() { return _currentRound.currentWave; }
+	UFUNCTION(BlueprintCallable)
+	int GetMaxWave() { return _currentRound.totalWaves; }
+
 };
