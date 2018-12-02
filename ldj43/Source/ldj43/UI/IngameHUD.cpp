@@ -2,6 +2,8 @@
 
 #include "../Game/ArenaGameState.h"
 
+#include "Engine/Engine.h"
+#include "EngineGlobals.h"
 #include "Kismet/GameplayStatics.h"
 
 AIngameHUD::AIngameHUD()

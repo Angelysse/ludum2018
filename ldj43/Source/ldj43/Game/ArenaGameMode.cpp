@@ -113,6 +113,11 @@ void AArenaGameMode::GenerateSacrifice()
 	while (mIndex2 == bIndex2)
 		mIndex2 = FMath::RandRange(0, sacrifices.Num() - 1);
 
+	sacrifices[bIndex1].GetDefaultObject()->Regenerate();
+	sacrifices[mIndex1].GetDefaultObject()->Regenerate();
+	sacrifices[bIndex2].GetDefaultObject()->Regenerate();
+	sacrifices[mIndex2].GetDefaultObject()->Regenerate();
+
 	Cast<AIngameHUD>(GetWorld()->GetFirstPlayerController()->GetHUD())->
 		NewSacrifice(sacrifices[bIndex1].GetDefaultObject(), sacrifices[mIndex1].GetDefaultObject(),
 			sacrifices[bIndex2].GetDefaultObject(), sacrifices[mIndex2].GetDefaultObject());

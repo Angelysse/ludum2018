@@ -3,6 +3,7 @@
 #include "AIManager.h"
 #include "../Game/ArenaGameState.h"
 #include "../Game/ArenaGameMode.h"
+#include "../Controllers/BasicAIController.h"
 
 #include "Engine/World.h"
 #include "EngineGlobals.h"
@@ -33,6 +34,7 @@ void AAIManager::BeginPlay()
 	}
 	
 	computeEnemySpawnFrequencies();
+	registerToGameEvents();
 }
 
 //--------------------------
@@ -44,6 +46,34 @@ void AAIManager::Tick(float DeltaTime)
 
 //============================
 //Custom Methods
+
+void AAIManager::registerToGameEvents()
+{
+	AArenaGameState* gameState = GetWorld()->GetGameState<AArenaGameState>();
+
+	if (gameState != nullptr)
+	{
+		gameState->getEndGame().AddUFunction(this, "disableAllAI");
+	}
+}
+
+//--------------------------
+
+void AAIManager::disableAllAI()
+{
+	for (ABasicAICharacter* bot : _bots)
+	{
+		if (bot != nullptr)
+		{
+			ABasicAIController* controller = Cast<ABasicAIController>(bot->GetController());
+
+			if (controller != nullptr)
+			{
+				controller->setIsActive(false);
+			}
+		}
+	}
+}
 
 //--------------------------
 
