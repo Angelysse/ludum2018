@@ -45,7 +45,10 @@ UCameraComponent const* AMainCharacter::GetCameraComponent()
 
 void AMainCharacter::SetItem(const FString& name)
 {
+	if (!name.IsEmpty())
+	{
 
+	}
 }
 
 void AMainCharacter::SetWeapon(const FString& name, bool isRight)
@@ -57,14 +60,16 @@ void AMainCharacter::SetWeapon(const FString& name, bool isRight)
 		if (_rWeapon)
 			gm->FreeWeapon(_rWeapon);
 
-		_rWeapon = gm->GetWeapon("r" + name);
+		if(!name.IsEmpty())
+			_rWeapon = gm->GetWeapon("r" + name);
 	}
 	else
 	{
 		if (_lWeapon)
 			gm->FreeWeapon(_lWeapon);
 
-		_lWeapon = gm->GetWeapon("l" + name);
+		if (!name.IsEmpty())
+			_lWeapon = gm->GetWeapon("l" + name);
 	}
 }
 
@@ -103,7 +108,8 @@ void AMainCharacter::StartJump()
 
 void AMainCharacter::EndJump()
 {
-	_sMachine.switchTo(StateType::IDLE);
+	if (_sMachine.getState() == static_cast<uint8>(StateType::JUMP))
+		_sMachine.switchTo(StateType::IDLE);
 }
 
 void AMainCharacter::SetupFirstPersonCamera()
@@ -112,7 +118,7 @@ void AMainCharacter::SetupFirstPersonCamera()
 	GetCharacterMovement()->bUseControllerDesiredRotation = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, -1.0f, 0.0f);
 
-	_cameraBoom->SetRelativeLocation(FVector(0.0f, 30.0f, 130.0f));
+	_cameraBoom->SetRelativeLocation(FVector(0.0f, 10.0f, 150.0f));
 	_cameraBoom->TargetArmLength = 0.0f;
 
 	_camera->bUsePawnControlRotation = false;
@@ -127,7 +133,7 @@ void AMainCharacter::SetupThirdPersonCamera()
 	GetCharacterMovement()->bUseControllerDesiredRotation = false;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
 
-	_cameraBoom->SetRelativeLocation(FVector(0.0f, 0.0f, 160.0f));
+	_cameraBoom->SetRelativeLocation(FVector(0.0f, 0.0f, 180.0f));
 	_cameraBoom->TargetArmLength = 300.0f;
 
 	_camera->bUsePawnControlRotation = true;
@@ -166,7 +172,5 @@ void AMainCharacter::onDie(AGlobalCharacter* deadChar, AGlobalCharacter* killedB
 	if (deadChar == this)
 	{
 		//Call lose event
-
-		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "Main player died");
 	}
 }

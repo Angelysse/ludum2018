@@ -45,29 +45,15 @@ void AAIManager::Tick(float DeltaTime)
 //============================
 //Custom Methods
 
-//void AAIManager::registerToGameEvents()
-//{
-//	AArenaGameState* gameState = GetWorld()->GetGameState<AArenaGameState>();
-//	
-//	if (gameState != nullptr)
-//	{
-//		//Dead character
-//		gameState->getOnDie().AddUFunction(this, "handleBotDeath");
-//	}
-//}
-
 //--------------------------
 
 void AAIManager::handleBotDeath(AGlobalCharacter* deadChar, AGlobalCharacter* other)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, TEXT("HandleBotDeath"));
-
 	for (int32 index = 0; index < _bots.Num(); index++)
 	{
 		if (_bots[index] == deadChar)
 		{
 			_bots.RemoveAt(index);
-			GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, TEXT("Removed"));
 
 			AArenaGameMode* gameMode = Cast<AArenaGameMode>(GetWorld()->GetAuthGameMode());
 			if (gameMode != nullptr)
@@ -175,9 +161,7 @@ void AAIManager::spawnWave(uint32 nbEnemies)
 	while (count != nbEnemies)
 	{
 		if (spawnRandomEnemy())	//Might want to pass position as argument
-		{
 			count++;
-		}
 	}
 }
 

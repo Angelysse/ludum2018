@@ -7,6 +7,8 @@
 #include "EngineGlobals.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
+#include "TimerManager.h"
+#include "Kismet/GameplayStatics.h"
 
 //=====================
 //Overriden Methods
@@ -27,6 +29,14 @@ void AArenaGameMode::BeginPlay()
 
 	registerToGameEvents();
 	handleNewRound();
+}
+
+void AArenaGameMode::Tick(float DeltaSeconds)
+{
+	float time = UGameplayStatics::GetGlobalTimeDilation(GetWorld());
+
+	if (!FMath::IsNearlyEqual(time, targetTime))
+		UGameplayStatics::SetGlobalTimeDilation(GetWorld(), FMath::Lerp(slowTime, targetTime, DeltaSeconds * FMath::Sqrt(time)));
 }
 
 //-----------------
@@ -65,9 +75,33 @@ void AArenaGameMode::GenerateMap()
 
 		// Spawn Block.
 		auto actor = GetWorld()->SpawnActor<ACubeActor>(FVector(float(posX) - midX, float(posY) - midY, 270.0), FRotator::ZeroRotator);
-		actor->SetActorScale3D(FVector(sizeX, sizeY, 5));
+		actor->ScaleWall(FVector(sizeX, sizeY, 5));
 		actor->AttachToActor(_wallsRoot, FAttachmentTransformRules::KeepWorldTransform);
 	}
+}
+
+void AArenaGameMode::GenerateSacrifice()
+{
+	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 0.4);
+
+	uint32 bIndex1 = FMath::RandRange(0, sacrifices.Num() - 1);
+	uint32 mIndex1 = FMath::RandRange(0, sacrifices.Num() - 1);
+
+	while(mIndex1 == bIndex1)
+		mIndex1 = FMath::RandRange(0, sacrifices.Num() - 1);
+
+	uint32 bIndex2 = FMath::RandRange(0, sacrifices.Num() - 1);
+	uint32 mIndex2 = FMath::RandRange(0, sacrifices.Num() - 1);
+
+	while (mIndex2 == bIndex2)
+		mIndex2 = FMath::RandRange(0, sacrifices.Num() - 1);
+
+	targetTime = slowTime;
+}
+
+void AArenaGameMode::ResetTimeDelation()
+{
+	targetTime = 1.0f;
 }
 
 //-----------------
@@ -114,7 +148,6 @@ void AArenaGameMode::handleNewRound()
 void AArenaGameMode::handleNewWave()
 {
 	uint32 nbBots = _currentRound.nextWave();
-	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "Spawn " + FString::SanitizeFloat(nbBots));
 	_aiManager->spawnWave(nbBots);
 }
 
@@ -124,8 +157,6 @@ void AArenaGameMode::checkRoundProgression(AGlobalCharacter* deadChar, AGlobalCh
 {
 	AArenaGameState*	gameState = Cast<AArenaGameState>(GameState);
 
-	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "checkRound");
-
 	if (gameState != nullptr)
 	{
 		//Wave finished
@@ -133,15 +164,9 @@ void AArenaGameMode::checkRoundProgression(AGlobalCharacter* deadChar, AGlobalCh
 		{
 			//Next round
 			if (_currentRound.isLastWave())
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "nextRound");
 				gameState->switchToNextRound();
-			}
 			else	//Next wave
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "nextWave");
 				gameState->switchToNextWave();
-			}
 		}
 	}
 }

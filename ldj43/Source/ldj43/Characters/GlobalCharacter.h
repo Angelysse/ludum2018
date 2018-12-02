@@ -1,8 +1,5 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
-#include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "StateMachine/StateMachine.h"
 
@@ -26,10 +23,14 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+	FVector color = FVector(1);
+
 	//Variables
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	float maxHp = 100.0f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	float hp = maxHp;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")

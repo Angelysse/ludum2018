@@ -1,10 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Game/GlobalGameState.h"
 #include "Characters/GlobalCharacter.h"
+#include "UI/IngameHUD.h"
+
 #include "ArenaGameState.generated.h"
 
 DECLARE_EVENT(AArenaGameState, FNextWave);
@@ -26,6 +25,7 @@ class LDJ43_API AArenaGameState : public AGlobalGameState
 		FNextRound	_nextRound;
 		FTakeDamage	_takeDamage;
 		FDie		_die;
+	AIngameHUD* _hud;
 
 	public:
 		//Custom Methods

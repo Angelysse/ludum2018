@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "GlobalCharacter.h"
 #include "../Animations/MainAnimInstance.h"
 #include "../Game/ArenaGameState.h"
@@ -22,6 +20,8 @@ void AGlobalCharacter::BeginPlay()
 	_sMachine.switchTo(StateType::IDLE);
 	setupStats();
 	registerToGameEvents();
+
+	GetMesh()->SetVectorParameterValueOnMaterials("BodyColor", color);
 }
 
 // Called every frame
@@ -81,9 +81,7 @@ void AGlobalCharacter::takeDamageFrom(AGlobalCharacter* other, float damages)
 
 		//Check if die
 		if (hp <= 0)
-		{
 			gameState->onDie(this, other);
-		}
 	}
 }
 
@@ -94,7 +92,8 @@ void AGlobalCharacter::onTakeDamageFrom(AGlobalCharacter* other)
 
 void AGlobalCharacter::onDie(AGlobalCharacter* deadChar, AGlobalCharacter* other)
 {
-	//Switch to death state here
+	if(deadChar == this)
+		deadChar->_sMachine.switchTo(StateType::DEATH);
 }
 
 void AGlobalCharacter::startAttack()
