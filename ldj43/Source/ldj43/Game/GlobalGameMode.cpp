@@ -1,15 +1,15 @@
 #include "GlobalGameMode.h"
 
-UWeaponComponentBase* AGlobalGameMode::GetWeapon(const FString& name)
+AWeapon* AGlobalGameMode::GetWeapon(const FString& name)
 {
-	UWeaponComponentBase* weapon = weapons[name];
-	weapon->SetActive(true);
+	AWeapon* weapon = weapons[name];
+	weapon->GetRootComponent()->SetActive(true);
 
 	return weapon;
 }
 
-void AGlobalGameMode::FreeWeapon(UWeaponComponentBase* weapon)
+void AGlobalGameMode::FreeWeapon(AWeapon* weapon)
 {
-	weapon->SetActive(false);
-	weapon->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+	weapon->GetRootComponent()->SetActive(false);
+	weapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 }

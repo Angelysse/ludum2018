@@ -16,6 +16,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sacrifice")
 	uint8 action = static_cast<uint8>(Action::JUMP);
 
+	virtual void GenerateDescriptions() override
+	{
+		_bonusDescription = "Regain access to the jump key";
+		_malusDescription = "Lose access to your ability to jump";
+	};
+
 	void Regenerate() override
 	{
 	}

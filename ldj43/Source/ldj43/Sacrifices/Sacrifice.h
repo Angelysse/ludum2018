@@ -23,6 +23,12 @@ protected:
 	UTexture2D* _image;
 
 public:
+	USacrifice() 
+	{ 
+		GenerateDescriptions(); 
+	};
+
+	virtual void GenerateDescriptions() {};
 	void Regenerate() override {}
 
 	UFUNCTION(BlueprintCallable)
