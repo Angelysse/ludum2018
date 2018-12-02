@@ -108,7 +108,7 @@ void AMainCharacter::SetupFirstPersonCamera()
 	GetCharacterMovement()->bUseControllerDesiredRotation = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, -1.0f, 0.0f);
 
-	_cameraBoom->SetRelativeLocation(FVector(0.0f, 30.0f, 130.0f));
+	_cameraBoom->SetRelativeLocation(FVector(0.0f, 10.0f, 150.0f));
 	_cameraBoom->TargetArmLength = 0.0f;
 
 	_camera->bUsePawnControlRotation = false;
@@ -123,7 +123,7 @@ void AMainCharacter::SetupThirdPersonCamera()
 	GetCharacterMovement()->bUseControllerDesiredRotation = false;
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
 
-	_cameraBoom->SetRelativeLocation(FVector(0.0f, 0.0f, 160.0f));
+	_cameraBoom->SetRelativeLocation(FVector(0.0f, 0.0f, 180.0f));
 	_cameraBoom->TargetArmLength = 300.0f;
 
 	_camera->bUsePawnControlRotation = true;

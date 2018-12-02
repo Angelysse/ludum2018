@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Characters/MainCharacter.h"
+#include "UI/PlayerWidget.h"
 
 #include "GameFramework/HUD.h"
 #include "IngameHUD.generated.h"
@@ -9,14 +10,21 @@ UCLASS()
 class LDJ43_API AIngameHUD : public AHUD
 {
 	GENERATED_BODY()
-	
-private:
 
+private:
+	AGlobalCharacter* _player = nullptr;
+
+	AIngameHUD();
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FString waveText;
+	TSubclassOf<UUserWidget> _playerWidgetClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FString roundText;
+	UPlayerWidget* _playerWidget = nullptr;
 
+public:
+	void BeginPlay() override;
+
+	void SetWaveNumber(int number);
+	void SetRoundNumber(int number);
 };

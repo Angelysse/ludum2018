@@ -7,6 +7,7 @@ UWeaponComponentBase* AGlobalGameMode::GetWeapon(const FString& name)
 
 	return weapon;
 }
+
 void AGlobalGameMode::FreeWeapon(UWeaponComponentBase* weapon)
 {
 	weapon->SetActive(false);
