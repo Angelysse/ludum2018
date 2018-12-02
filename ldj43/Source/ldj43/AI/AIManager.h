@@ -24,6 +24,9 @@ private:
 	void computeEnemySpawnFrequencies();
 	void registerToGameEvents();
 
+	UFUNCTION()
+	void disableAllAI();
+
 protected:
 	//Variables
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemies")
