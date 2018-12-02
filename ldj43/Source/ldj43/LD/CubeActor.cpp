@@ -18,7 +18,7 @@ ACubeActor::ACubeActor()
 
 	if (!_mat)
 	{
-		ConstructorHelpers::FObjectFinder<UMaterial> MatContainer(TEXT("Material'/Game/Resources/Materials/StyleWall_MAT.StyleWall_MAT'"));
+		ConstructorHelpers::FObjectFinder<UMaterial> MatContainer(TEXT("Material'/Game/Resources/Materials/WallMat/StyleWall_MAT.StyleWall_MAT'"));
 		if (MatContainer.Succeeded())
 			_mat = MatContainer.Object;
 	}

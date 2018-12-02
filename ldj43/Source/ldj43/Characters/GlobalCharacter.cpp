@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "GlobalCharacter.h"
 #include "../Animations/MainAnimInstance.h"
 
@@ -19,6 +17,8 @@ void AGlobalCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 	_sMachine.switchTo(StateType::IDLE);
+
+	GetMesh()->SetVectorParameterValueOnMaterials("BodyColor", color);
 }
 
 // Called every frame
