@@ -67,6 +67,11 @@ void AArenaGameMode::GenerateMap()
 	}
 }
 
+void AArenaGameMode::GenerateSacrifice()
+{
+
+}
+
 //-----------------
 
 void AArenaGameMode::initAIManager()

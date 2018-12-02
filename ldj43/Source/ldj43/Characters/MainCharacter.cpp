@@ -45,7 +45,10 @@ UCameraComponent const* AMainCharacter::GetCameraComponent()
 
 void AMainCharacter::SetItem(const FString& name)
 {
+	if (!name.IsEmpty())
+	{
 
+	}
 }
 
 void AMainCharacter::SetWeapon(const FString& name, bool isRight)
@@ -57,14 +60,16 @@ void AMainCharacter::SetWeapon(const FString& name, bool isRight)
 		if (_rWeapon)
 			gm->FreeWeapon(_rWeapon);
 
-		_rWeapon = gm->GetWeapon("r" + name);
+		if(!name.IsEmpty())
+			_rWeapon = gm->GetWeapon("r" + name);
 	}
 	else
 	{
 		if (_lWeapon)
 			gm->FreeWeapon(_lWeapon);
 
-		_lWeapon = gm->GetWeapon("l" + name);
+		if (!name.IsEmpty())
+			_lWeapon = gm->GetWeapon("l" + name);
 	}
 }
 

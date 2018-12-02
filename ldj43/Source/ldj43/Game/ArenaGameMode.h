@@ -3,6 +3,8 @@
 #include "Game/GlobalGameMode.h"
 #include "AI/AIManager.h"
 
+#include "Sacrifices/SacrificeIncludes.h"
+
 #include "ArenaGameMode.generated.h"
 
 UCLASS()
@@ -27,6 +29,9 @@ class LDJ43_API AArenaGameMode : public AGlobalGameMode
 		virtual void BeginPlay() override;
 	
 protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game")
+	TArray<TSubclassOf<USacrifice>> sacrifices;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
 	int _mapMaxWallSize = 10;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
@@ -45,6 +50,7 @@ protected:
 	float _mapStepHeight = 1.0f;
 
 	void GenerateMap();
+	void GenerateSacrifice();
 
 	void StartPlay() override;
 };
