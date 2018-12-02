@@ -23,7 +23,7 @@ void AArenaGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	spawnWave(1);
+	_aiManager->spawnWave(20);
 }
 
 //-----------------
@@ -80,24 +80,6 @@ void AArenaGameMode::initAIManager()
 
 	if (_aiManager == nullptr)
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Emerald, TEXT("Missing AiManager in the level"));
-}
-
-//-----------------
-
-void AArenaGameMode::spawnWave(uint32 nbEnemies)
-{
-	if (_aiManager != nullptr)
-	{
-		uint32 count = 0;
-
-		while (count != nbEnemies)
-		{
-			if (_aiManager->spawnRandomEnemy())	//Might want to pass position as argument
-			{
-				count++;
-			}
-		}
-	}
 }
 
 //-----------------

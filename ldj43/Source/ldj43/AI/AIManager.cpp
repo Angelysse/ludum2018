@@ -5,6 +5,7 @@
 #include "Engine/World.h"
 #include "EngineGlobals.h"
 #include "Engine.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
 //============================
 //Constructors
@@ -54,13 +55,40 @@ void AAIManager::computeEnemySpawnFrequencies()
 
 //--------------------------
 
+FVector AAIManager::generateRandomLocation() const
+{
+	ACharacter* player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
+	uint32		randomSide = FMath::RandRange(0, 1);
+
+	if (player != nullptr)
+	{
+		FVector position = player->GetActorLocation();
+
+		if (randomSide)
+		{
+			position.X = (position.X > 0) ? -4600.0f : 4600.0f;
+			position.Y = FMath::RandRange(-4600.0f, 4600.0f);
+		}
+		else
+		{
+			position.X = FMath::RandRange(-4600.0f, 4600.0f);
+			position.Y = (position.Y > 0) ? -4600.0f : 4600.0f;
+		}
+
+		return position;
+	}
+
+	return FVector(-4600.0f, -4600.0f, 50.0f);
+}
+
+//--------------------------
+
 bool AAIManager::spawnEnemy(TSubclassOf<ABasicAICharacter>& enemyType)
 {
 	FActorSpawnParameters	spawnParams;
 	spawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
-	FTransform				transform(GetTransform());
 
-	ABasicAICharacter* spawnedBot = Cast<ABasicAICharacter>(GetWorld()->SpawnActor(enemyType.Get(), &transform, spawnParams));
+	ABasicAICharacter* spawnedBot = GetWorld()->SpawnActor<ABasicAICharacter>(enemyType.Get(), generateRandomLocation(), FRotator::ZeroRotator, spawnParams);
 
 	if (spawnedBot != nullptr)
 	{
@@ -97,4 +125,26 @@ bool AAIManager::spawnRandomEnemy()
 	}
 
 	return false;
+}
+
+//--------------------------
+
+void AAIManager::spawnWave(uint32 nbEnemies)
+{
+	uint32 count = 0;
+
+	while (count != nbEnemies)
+	{
+		if (spawnRandomEnemy())	//Might want to pass position as argument
+		{
+			count++;
+		}
+	}
+}
+
+//--------------------------
+
+bool AAIManager::areAllAIDead() const
+{
+	return !_bots.Num();
 }
