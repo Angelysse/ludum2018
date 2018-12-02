@@ -47,6 +47,10 @@ class LDJ43_API AMainCharacter : public AGlobalCharacter
 
 		void StartJump();
 
+		virtual void LAttack() override;
+
+		virtual void RAttack() override;
+
 		UFUNCTION(BlueprintCallable, Category = "Player")
 		void EndJump();
 

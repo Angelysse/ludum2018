@@ -15,7 +15,7 @@ class LDJ43_API AGlobalCharacter : public ACharacter
 
 protected:
 	//Variables
-	StateMachine	_sMachine = StateMachine(this);
+	StateMachine		_sMachine		= StateMachine(this);
 
 	//Overriden Methods
 	virtual void BeginPlay() override;
@@ -31,6 +31,12 @@ public:
 	float basicAttackPower = 1.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+	float basicAttackSpeed = 1.0f;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Stats")
+	float attackSpeedMultiplier = 1.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	float attackCooldown = 0.1f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
@@ -39,6 +45,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool canAttack = true;
 
+	class UMainAnimInstance*	_animInstance = nullptr;
+
 	//Constructors
 	AGlobalCharacter();
 
@@ -46,6 +54,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 	//Custom Methods
+	UFUNCTION(BlueprintCallable)
 	virtual void LAttack();
 
 	UFUNCTION(BlueprintCallable)

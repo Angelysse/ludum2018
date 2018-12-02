@@ -2,6 +2,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Game/ArenaGameMode.h"
 #include "BasicAICharacter.h"
+#include "../Animations/MainAnimInstance.h"
 
 #include "EngineGlobals.h"
 #include "Engine/Engine.h"
@@ -76,6 +77,18 @@ void AMainCharacter::UseItem()
 {
 	if (_item)
 		_item->Use();
+}
+
+void AMainCharacter::LAttack()
+{
+	_animInstance->attackSpeed = (_lWeapon != nullptr ? _lWeapon->_attackSpeed : basicAttackSpeed) * attackSpeedMultiplier;
+	_sMachine.switchTo(StateType::LATTACK);
+}
+
+void AMainCharacter::RAttack()
+{
+	_animInstance->attackSpeed = (_rWeapon != nullptr ? _rWeapon->_attackSpeed : basicAttackSpeed) * attackSpeedMultiplier;
+	_sMachine.switchTo(StateType::RATTACK);
 }
 
 bool AMainCharacter::canHit(AGlobalCharacter const* other)
