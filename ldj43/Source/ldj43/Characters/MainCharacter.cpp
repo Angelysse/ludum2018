@@ -1,6 +1,7 @@
 #include "MainCharacter.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Game/ArenaGameMode.h"
+#include "Game/ArenaGameState.h"
 #include "BasicAICharacter.h"
 #include "../Animations/MainAnimInstance.h"
 
@@ -161,8 +162,7 @@ float AMainCharacter::getAttackPower(bool isRightSlot) const
 
 void AMainCharacter::onTakeDamageFrom(AGlobalCharacter* other)
 {
-	//Refresh GUI
-	//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "Take damage : " + FString::SanitizeFloat(hp));
+	//Nothing to do
 }
 
 void AMainCharacter::onDie(AGlobalCharacter* deadChar, AGlobalCharacter* killedBy)
@@ -171,6 +171,10 @@ void AMainCharacter::onDie(AGlobalCharacter* deadChar, AGlobalCharacter* killedB
 
 	if (deadChar == this)
 	{
-		//Call lose event
+		AArenaGameState* gameState = GetWorld()->GetGameState<AArenaGameState>();
+		if (gameState != nullptr)
+		{
+			gameState->switchToEndGame();
+		}
 	}
 }
