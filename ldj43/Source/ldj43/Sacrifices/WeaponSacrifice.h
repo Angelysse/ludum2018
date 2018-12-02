@@ -14,6 +14,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sacrifice")
 	FString weaponName = "Sword";
 
+	virtual void GenerateDescriptions() override
+	{
+		_bonusDescription = "Gain a sword";
+		_malusDescription = "Lose your sword (if you have one)";
+	};
+
 	void Regenerate() override
 	{
 	}

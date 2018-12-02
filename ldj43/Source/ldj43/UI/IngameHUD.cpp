@@ -1,5 +1,7 @@
 #include "IngameHUD.h"
 
+#include "../Game/ArenaGameState.h"
+
 #include "Kismet/GameplayStatics.h"
 
 AIngameHUD::AIngameHUD()
@@ -39,6 +41,27 @@ void AIngameHUD::BeginPlay()
 		SetWaveNumber(0);
 		SetRoundNumber(0);
 	}
+
+	if (_endGameWidgetClass && _player != nullptr && _gamestate != nullptr)
+	{
+		// Create and display Widgets
+		_endGameWidgetInstance = CreateWidget<UEndGameWidget>(GetWorld(), _endGameWidgetClass);
+		_endGameWidgetInstance->AddToViewport();
+		_endGameWidgetInstance->SetVisibility(ESlateVisibility::Hidden);
+	}
+
+	registerToGameEvents();
+}
+
+void AIngameHUD::registerToGameEvents()
+{
+	AArenaGameState* gameState = GetWorld()->GetGameState<AArenaGameState>();
+
+	if (gameState != nullptr)
+	{
+		//EndGame
+		gameState->getEndGame().AddUFunction(this, "handleEndGameGUI");
+	}
 }
 
 void AIngameHUD::SetWaveNumber(int number)
@@ -55,4 +78,13 @@ void AIngameHUD::NewSacrifice(USacrifice* bonus1, USacrifice* malus1, USacrifice
 {
 	_sacrificeSelectorWidget->Activate(bonus1, malus1, bonus2, malus2);
 	_sacrificeSelectorWidget->SetVisibility(ESlateVisibility::Visible);
+}
+
+void AIngameHUD::handleEndGameGUI()
+{
+	if (_endGameWidgetInstance != nullptr)
+	{
+		_endGameWidgetInstance->SetVisibility(ESlateVisibility::Visible);
+		_endGameWidgetInstance->handleApparition();
+	}
 }

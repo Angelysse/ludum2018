@@ -14,7 +14,7 @@ class LDJ43_API UEndGameWidget : public UUserWidget
 {
 	GENERATED_BODY()
 	
-	
-	
-	
+	public:
+		UFUNCTION(BlueprintImplementableEvent)
+		void handleApparition();
 };

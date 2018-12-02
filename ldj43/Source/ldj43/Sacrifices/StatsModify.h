@@ -23,10 +23,17 @@ public:
 	float currHp = 0.0f;
 	float currAS = 0.0f;
 
+	virtual void GenerateDescriptions() override
+	{
+		_bonusDescription = FString::Printf(TEXT("+ %.2f Health point, "), currHp) + FString::Printf(TEXT("+ %.2f Attack speed"), currAS);
+		_malusDescription = FString::Printf(TEXT("- %.2f Health point, "), currHp) + FString::Printf(TEXT("- %.2f Attack speed"), currAS);
+	};
+
 	void Regenerate() override
 	{
 		currHp = FMath::FRandRange(_minHP, _maxHP);
 		currAS = FMath::FRandRange(_minAS, _maxAS);
+		GenerateDescriptions();
 	}
 	void ApplyBonus(AMainCharacter* chara) override
 	{
