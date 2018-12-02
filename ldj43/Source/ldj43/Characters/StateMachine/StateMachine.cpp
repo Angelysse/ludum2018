@@ -21,8 +21,8 @@ StateMachine::~StateMachine()
 void StateMachine::initStates(AGlobalCharacter* chara)
 {
 	_states[0] = new IdleRunState(chara);
-	_states[1] = new RAttackState(chara);
-	_states[2] = new LAttackState(chara);
+	_states[1] = new LAttackState(chara);
+	_states[2] = new RAttackState(chara);
 	_states[3] = new JumpState(chara);
 }
 

@@ -108,7 +108,8 @@ void AMainCharacter::StartJump()
 
 void AMainCharacter::EndJump()
 {
-	_sMachine.switchTo(StateType::IDLE);
+	if (_sMachine.getState() == static_cast<uint8>(StateType::JUMP))
+		_sMachine.switchTo(StateType::IDLE);
 }
 
 void AMainCharacter::SetupFirstPersonCamera()
