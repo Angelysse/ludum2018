@@ -16,7 +16,8 @@ void IdleRunState::onExitState()
 bool IdleRunState::canSwitchTo(uint8 newState) const
 {
 	return (newState == static_cast<uint8>(StateType::JUMP) && Cast<AGlobalPlayerState>(_chara->PlayerState)->canJump && _chara->CanJump())
-		|| (_chara->canAttack && (newState == static_cast<uint8>(StateType::RATTACK) || newState == static_cast<uint8>(StateType::LATTACK)));
+		|| (_chara->canAttack && (newState == static_cast<uint8>(StateType::RATTACK) || newState == static_cast<uint8>(StateType::LATTACK))) ||
+		newState == static_cast<uint8>(StateType::DEATH);
 }
 
 uint8 IdleRunState::getState() const

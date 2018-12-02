@@ -15,7 +15,8 @@ void RAttackState::onExitState()
 
 bool RAttackState::canSwitchTo(uint8 newState) const
 {
-	return newState == static_cast<uint8>(StateType::IDLE);
+	return newState == static_cast<uint8>(StateType::IDLE) ||
+		newState == static_cast<uint8>(StateType::DEATH);
 }
 
 uint8 RAttackState::getState() const

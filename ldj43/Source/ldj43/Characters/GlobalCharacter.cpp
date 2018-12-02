@@ -69,7 +69,7 @@ void AGlobalCharacter::onTakeDamageFrom(AGlobalCharacter const* other)
 
 void AGlobalCharacter::onDie(AGlobalCharacter const* killedBy)
 {
-	//Switch to death state here
+	_sMachine.switchTo(StateType::DEATH);
 }
 
 void AGlobalCharacter::startAttack()

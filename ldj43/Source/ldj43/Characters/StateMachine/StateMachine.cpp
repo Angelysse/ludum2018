@@ -16,6 +16,7 @@ StateMachine::~StateMachine()
 	delete _states[1];
 	delete _states[2];
 	delete _states[3];
+	delete _states[4];
 }
 
 void StateMachine::initStates(AGlobalCharacter* chara)
@@ -24,6 +25,7 @@ void StateMachine::initStates(AGlobalCharacter* chara)
 	_states[1] = new LAttackState(chara);
 	_states[2] = new RAttackState(chara);
 	_states[3] = new JumpState(chara);
+	_states[4] = new DeathState(chara);
 }
 
 bool StateMachine::switchTo(StateType nextState)

@@ -52,49 +52,41 @@ void AMainPlayerController::setupBasicInputs()
 
 void AMainPlayerController::moveForward(float value)
 {
-	AMainCharacter* controlledPawn = Cast<AMainCharacter>(GetPawn());
+	AMainCharacter* controlledCharacter = Cast<AMainCharacter>(GetPawn());
 
-	if (controlledPawn != nullptr)
-	{
-		controlledPawn->AddMovementInput(controlledPawn->GetCameraComponent()->GetForwardVector(), value);
-	}
+	if (controlledCharacter != nullptr && controlledCharacter->GetState() != static_cast<uint8>(StateType::DEATH))
+		controlledCharacter->AddMovementInput(controlledCharacter->GetCameraComponent()->GetForwardVector(), value);
 }
 
 void AMainPlayerController::moveRight(float value)
 {
-	AMainCharacter* controlledPawn = Cast<AMainCharacter>(GetPawn());
+	AMainCharacter* controlledCharacter = Cast<AMainCharacter>(GetPawn());
 
-	if (controlledPawn != nullptr)
-	{
-		controlledPawn->AddMovementInput(controlledPawn->GetCameraComponent()->GetRightVector(), value);
-	}
+	if (controlledCharacter != nullptr && controlledCharacter->GetState() != static_cast<uint8>(StateType::DEATH))
+		controlledCharacter->AddMovementInput(controlledCharacter->GetCameraComponent()->GetRightVector(), value);
 }
 
 void AMainPlayerController::rotateCameraYaw(float value)
 {
-	APawn* controlledPawn = GetPawn();
+	APawn* controlledCharacter = GetPawn();
 
-	if (controlledPawn != nullptr)
-	{
-		controlledPawn->AddControllerYawInput(value);
-	}
+	if (controlledCharacter != nullptr)
+		controlledCharacter->AddControllerYawInput(value);
 }
 
 void AMainPlayerController::rotateCameraPitch(float value)
 {
-	APawn* controlledPawn = GetPawn();
+	APawn* controlledCharacter = GetPawn();
 
-	if (controlledPawn != nullptr)
-	{
-		controlledPawn->AddControllerPitchInput(value);
-	}
+	if (controlledCharacter != nullptr)
+		controlledCharacter->AddControllerPitchInput(value);
 }
 
 void AMainPlayerController::jump()
 {
 	AMainCharacter* controlledCharacter = Cast<AMainCharacter>(GetPawn());
 
-	if (controlledCharacter != nullptr)
+	if (controlledCharacter != nullptr && controlledCharacter->GetState() != static_cast<uint8>(StateType::DEATH))
 		controlledCharacter->StartJump();
 }
 
@@ -102,10 +94,8 @@ void AMainPlayerController::useLeftWeaponSlot()
 {
 	AMainCharacter* controlledCharacter = Cast<AMainCharacter>(GetPawn());
 
-	if (controlledCharacter != nullptr)
-	{
+	if (controlledCharacter != nullptr && controlledCharacter->GetState() != static_cast<uint8>(StateType::DEATH))
 		controlledCharacter->LAttack();
-	}
 
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Emerald, TEXT("AMainPlayerController::useLeftWeaponSlot()"));
 }
@@ -114,10 +104,8 @@ void AMainPlayerController::useRightWeaponSlot()
 {
 	AMainCharacter* controlledCharacter = Cast<AMainCharacter>(GetPawn());
 
-	if (controlledCharacter != nullptr)
-	{
+	if (controlledCharacter != nullptr && controlledCharacter->GetState() != static_cast<uint8>(StateType::DEATH))
 		controlledCharacter->RAttack();
-	}
 
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Emerald, TEXT("AMainPlayerController::useRightWeaponSlot()"));
 }
@@ -126,10 +114,8 @@ void AMainPlayerController::useItem()
 {
 	AMainCharacter* controlledCharacter = Cast<AMainCharacter>(GetPawn());
 
-	if (controlledCharacter != nullptr)
-	{
+	if (controlledCharacter != nullptr && controlledCharacter->GetState() != static_cast<uint8>(StateType::DEATH))
 		controlledCharacter->UseItem();
-	}
 
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Emerald, TEXT("AMainPlayerController::useItem()"));
 }
@@ -191,13 +177,9 @@ void AMainPlayerController::modifyAction(Action action, bool shouldEnable)
 {
 	//Bind
 	if (shouldEnable)
-	{
 		enableAction(action);
-	}
 	else	//Unbind
-	{
 		disableAction(action);
-	}
 }
 
 #pragma endregion
