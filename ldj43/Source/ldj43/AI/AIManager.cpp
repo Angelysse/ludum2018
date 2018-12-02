@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AIManager.h"
+#include "../Game/ArenaGameState.h"
+#include "../Game/ArenaGameMode.h"
 
 #include "Engine/World.h"
 #include "EngineGlobals.h"
@@ -42,6 +44,29 @@ void AAIManager::Tick(float DeltaTime)
 
 //============================
 //Custom Methods
+
+//--------------------------
+
+void AAIManager::handleBotDeath(AGlobalCharacter* deadChar, AGlobalCharacter* other)
+{
+	for (int32 index = 0; index < _bots.Num(); index++)
+	{
+		if (_bots[index] == deadChar)
+		{
+			_bots.RemoveAt(index);
+
+			AArenaGameMode* gameMode = Cast<AArenaGameMode>(GetWorld()->GetAuthGameMode());
+			if (gameMode != nullptr)
+			{
+				gameMode->checkRoundProgression(deadChar, other);
+			}
+
+			break;
+		}
+	}
+}
+
+//--------------------------
 
 void AAIManager::computeEnemySpawnFrequencies()
 {
@@ -136,9 +161,7 @@ void AAIManager::spawnWave(uint32 nbEnemies)
 	while (count != nbEnemies)
 	{
 		if (spawnRandomEnemy())	//Might want to pass position as argument
-		{
 			count++;
-		}
 	}
 }
 

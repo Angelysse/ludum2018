@@ -5,7 +5,8 @@ enum class StateType : uint8
 	IDLE = 0,
 	LATTACK,
 	RATTACK,
-	JUMP
+	JUMP,
+	DEATH
 };
 
 class IState

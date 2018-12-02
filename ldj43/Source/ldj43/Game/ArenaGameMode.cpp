@@ -1,10 +1,14 @@
 #include "ArenaGameMode.h"
 
+#include "ArenaGameState.h"
 #include "LD/CubeActor.h"
 
 #include "EngineUtils.h"
 #include "EngineGlobals.h"
+#include "Engine/Engine.h"
 #include "Engine/World.h"
+#include "TimerManager.h"
+#include "Kismet/GameplayStatics.h"
 
 //=====================
 //Overriden Methods
@@ -23,7 +27,16 @@ void AArenaGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	_aiManager->spawnWave(20);
+	registerToGameEvents();
+	handleNewRound();
+}
+
+void AArenaGameMode::Tick(float DeltaSeconds)
+{
+	float time = UGameplayStatics::GetGlobalTimeDilation(GetWorld());
+
+	if (!FMath::IsNearlyEqual(time, targetTime))
+		UGameplayStatics::SetGlobalTimeDilation(GetWorld(), FMath::Lerp(slowTime, targetTime, DeltaSeconds * FMath::Sqrt(time)));
 }
 
 //-----------------
@@ -69,7 +82,26 @@ void AArenaGameMode::GenerateMap()
 
 void AArenaGameMode::GenerateSacrifice()
 {
+	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 0.4);
 
+	uint32 bIndex1 = FMath::RandRange(0, sacrifices.Num() - 1);
+	uint32 mIndex1 = FMath::RandRange(0, sacrifices.Num() - 1);
+
+	while(mIndex1 == bIndex1)
+		mIndex1 = FMath::RandRange(0, sacrifices.Num() - 1);
+
+	uint32 bIndex2 = FMath::RandRange(0, sacrifices.Num() - 1);
+	uint32 mIndex2 = FMath::RandRange(0, sacrifices.Num() - 1);
+
+	while (mIndex2 == bIndex2)
+		mIndex2 = FMath::RandRange(0, sacrifices.Num() - 1);
+
+	targetTime = slowTime;
+}
+
+void AArenaGameMode::ResetTimeDelation()
+{
+	targetTime = 1.0f;
 }
 
 //-----------------
@@ -88,3 +120,53 @@ void AArenaGameMode::initAIManager()
 }
 
 //-----------------
+
+void AArenaGameMode::registerToGameEvents()
+{
+	AArenaGameState*	gameState = Cast<AArenaGameState>(GameState);
+
+	if (gameState != nullptr)
+	{
+		//Next round
+		gameState->getOnNextRound().AddUFunction(this, "handleNewRound");
+
+		//Next wave
+		gameState->getOnNextWave().AddUFunction(this, "handleNewWave");
+	}
+}
+
+//-----------------
+
+void AArenaGameMode::handleNewRound()
+{
+	_currentRound.nextRound();
+	handleNewWave();
+}
+
+//-----------------
+
+void AArenaGameMode::handleNewWave()
+{
+	uint32 nbBots = _currentRound.nextWave();
+	_aiManager->spawnWave(nbBots);
+}
+
+//-----------------
+
+void AArenaGameMode::checkRoundProgression(AGlobalCharacter* deadChar, AGlobalCharacter* killedBy)
+{
+	AArenaGameState*	gameState = Cast<AArenaGameState>(GameState);
+
+	if (gameState != nullptr)
+	{
+		//Wave finished
+		if (_aiManager != nullptr && _aiManager->areAllAIDead())
+		{
+			//Next round
+			if (_currentRound.isLastWave())
+				gameState->switchToNextRound();
+			else	//Next wave
+				gameState->switchToNextWave();
+		}
+	}
+}

@@ -1,8 +1,5 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
-#include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "StateMachine/StateMachine.h"
 
@@ -13,6 +10,11 @@ class LDJ43_API AGlobalCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+private:
+	//Custom Methods
+	void registerToGameEvents();
+	void setupStats();
+
 protected:
 	//Variables
 	StateMachine		_sMachine		= StateMachine(this);
@@ -21,6 +23,9 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+	FVector color = FVector(1);
+
 	//Variables
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	float maxHp = 100.0f;
@@ -65,11 +70,13 @@ public:
 	virtual bool canHit(AGlobalCharacter const* other);
 
 	UFUNCTION(BlueprintCallable)
-	void takeDamageFrom(AGlobalCharacter const* other, float damages);
+	void takeDamageFrom(AGlobalCharacter* other, float damages);
 
-	virtual void onTakeDamageFrom(AGlobalCharacter const* other);
+	UFUNCTION()
+	virtual void onTakeDamageFrom(AGlobalCharacter* other);
 
-	virtual void onDie(AGlobalCharacter const* killedBy);
+	UFUNCTION()
+	virtual void onDie(AGlobalCharacter* deadChar, AGlobalCharacter* other);
 
 	virtual void startAttack();
 	virtual void endAttack();

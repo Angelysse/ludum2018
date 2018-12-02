@@ -1,7 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #include "GlobalCharacter.h"
 #include "../Animations/MainAnimInstance.h"
+#include "../Game/ArenaGameState.h"
 
 #include "EngineGlobals.h"
 #include "Engine/Engine.h"
@@ -19,6 +18,10 @@ void AGlobalCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 	_sMachine.switchTo(StateType::IDLE);
+	setupStats();
+	registerToGameEvents();
+
+	GetMesh()->SetVectorParameterValueOnMaterials("BodyColor", color);
 }
 
 // Called every frame
@@ -26,6 +29,25 @@ void AGlobalCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AGlobalCharacter::registerToGameEvents()
+{
+	AArenaGameState* gameState = GetWorld()->GetGameState<AArenaGameState>();
+
+	if (gameState != nullptr)
+	{
+		//Take damage
+		gameState->getOnTakeDamage().AddUFunction(this, "onTakeDamageFrom");
+
+		//Die
+		gameState->getOnDie().AddUFunction(this, "onDie");
+	}
+}
+
+void AGlobalCharacter::setupStats()
+{
+	hp = maxHp;
 }
 
 void AGlobalCharacter::LAttack()
@@ -46,30 +68,32 @@ bool AGlobalCharacter::canHit(AGlobalCharacter const* other)
 	return false;
 }
 
-void AGlobalCharacter::takeDamageFrom(AGlobalCharacter const* other, float damages)
+void AGlobalCharacter::takeDamageFrom(AGlobalCharacter* other, float damages)
 {
-	if (hp > 0)
+	AArenaGameState* gameState = GetWorld()->GetGameState<AArenaGameState>();
+
+	//Check still alive
+	if (gameState != nullptr && hp > 0)
 	{
 		hp -= damages;
 
-		onTakeDamageFrom(other);
+		gameState->onTakeDamage(other);
 
+		//Check if die
 		if (hp <= 0)
-		{
-			onDie(other);
-		}
+			gameState->onDie(this, other);
 	}
-	
 }
 
-void AGlobalCharacter::onTakeDamageFrom(AGlobalCharacter const* other)
+void AGlobalCharacter::onTakeDamageFrom(AGlobalCharacter* other)
 {
 	//Default behavior does nothing special
 }
 
-void AGlobalCharacter::onDie(AGlobalCharacter const* killedBy)
+void AGlobalCharacter::onDie(AGlobalCharacter* deadChar, AGlobalCharacter* other)
 {
-	//Switch to death state here
+	if(deadChar == this)
+		deadChar->_sMachine.switchTo(StateType::DEATH);
 }
 
 void AGlobalCharacter::startAttack()

@@ -2,6 +2,8 @@
 
 #include "Game/GlobalGameMode.h"
 #include "AI/AIManager.h"
+#include "ArenaRound.h"
+#include "Characters/GlobalCharacter.h"
 
 #include "Sacrifices/SacrificeIncludes.h"
 
@@ -12,23 +14,31 @@ class LDJ43_API AArenaGameMode : public AGlobalGameMode
 {
 	GENERATED_BODY()
 
-	private:
-		//Variables
-		AAIManager*		_aiManager = nullptr;
+private:
+	//Variables
+	AActor*			_wallsRoot = nullptr;
+	ArenaRound		_currentRound;
 
-		AActor* _wallsRoot = nullptr;
+	FTimerHandle _spawnHandle;
 
-		//Custom Methods
-		void initAIManager();
+	//Custom Methods
+	void initAIManager();
+	void registerToGameEvents();
 
-	public:
-		//Overriden Methods
-		virtual void InitGame(FString const& MapName, FString const& Options, FString& ErrorMessage) override;
-		virtual void BeginPlay() override;
-	
+	UFUNCTION()
+	void handleNewRound();
+
+	UFUNCTION()
+	void handleNewWave();
+		
+	float targetTime = 1.0f;
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game")
 	TArray<TSubclassOf<USacrifice>> sacrifices;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
+	float slowTime = 0.1f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
 	int _mapMaxWallSize = 10;
@@ -37,18 +47,34 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
 	int _mapMaxWalls = 125;
 
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
-		int _mapWidth = 9000;
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
-		int _mapHeight = 9000;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
+	int _mapWidth = 9000;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
+	int _mapHeight = 9000;
 	
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
-		float _mapStepWidth = 1.0f;
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
-		float _mapStepHeight = 1.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
+	float _mapStepWidth = 1.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
+	float _mapStepHeight = 1.0f;
+
+public:
+	void Tick(float DeltaSeconds) override;
+
+	//Overriden Methods
+	virtual void InitGame(FString const& MapName, FString const& Options, FString& ErrorMessage) override;
+	virtual void BeginPlay() override;
+
 
 	void GenerateMap();
 	void GenerateSacrifice();
+	void ResetTimeDelation();
 
-		void StartPlay() override;
+	void StartPlay() override;
+
+	//Variables
+	AAIManager*		_aiManager = nullptr;
+
+	//Custom Methods
+	UFUNCTION()
+	void checkRoundProgression(AGlobalCharacter* deadChar, AGlobalCharacter* killedBy);
 };

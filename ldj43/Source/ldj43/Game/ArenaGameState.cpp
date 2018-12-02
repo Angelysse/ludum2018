@@ -2,23 +2,67 @@
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
 
-void AArenaGameState::BeginPlay()
-{
-	Super::BeginPlay();
+#include "Engine/Engine.h"
+#include "EngineGlobals.h"
 
-	_hud = Cast<AIngameHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+//=====================
+//Custom Methods
+
+void AArenaGameState::switchToNextWave()
+{
+	_nextWave.Broadcast();
 }
 
-void AArenaGameState::IncrementWave()
+//-----------------
+
+void AArenaGameState::switchToNextRound()
 {
-	_wave++;
-	if (_hud)
-		_hud->SetWaveNumber(_wave);
+	_nextRound.Broadcast();
 }
 
-void AArenaGameState::IncrementRound()
+//-----------------
+
+void AArenaGameState::onTakeDamage(AGlobalCharacter* hitBy)
 {
-	_round++;
-	if (_hud)
-		_hud->SetRoundNumber(_round);
+	_takeDamage.Broadcast(hitBy);
 }
+
+//-----------------
+
+void AArenaGameState::onDie(AGlobalCharacter* deadChar, AGlobalCharacter* killedBy)
+{
+	_die.Broadcast(deadChar, killedBy);
+}
+
+//-----------------
+
+//=====================
+//Getters
+
+FNextWave&	AArenaGameState::getOnNextWave()
+{
+	return _nextWave;
+}
+
+//-----------------
+
+FNextRound&	AArenaGameState::getOnNextRound()
+{
+	return _nextRound;
+}
+
+//-----------------
+
+FTakeDamage& AArenaGameState::getOnTakeDamage()
+{
+	return _takeDamage;
+}
+
+//-----------------
+
+FDie& AArenaGameState::getOnDie()
+{
+	return _die;
+}
+
+//-----------------

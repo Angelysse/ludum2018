@@ -1,16 +1,17 @@
 #pragma once
 
 #include "IdleRunState.h"
-#include "JumpState.h"
 #include "LAttackState.h"
 #include "RAttackState.h"
+#include "JumpState.h"
+#include "DeathState.h"
 
 class StateMachine
 {
 	private:
 		//Variables
 		IState*		_currentState;
-		IState*		_states[5];
+		IState*		_states[6];
 
 		//Methods
 		void initStates(AGlobalCharacter* chara);
