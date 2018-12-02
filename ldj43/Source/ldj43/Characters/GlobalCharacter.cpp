@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "GlobalCharacter.h"
+#include "../Animations/MainAnimInstance.h"
 
 #include "EngineGlobals.h"
 #include "Engine/Engine.h"
@@ -29,11 +30,13 @@ void AGlobalCharacter::Tick(float DeltaTime)
 
 void AGlobalCharacter::LAttack()
 {
+	_animInstance->attackSpeed = basicAttackSpeed * attackSpeedMultiplier;
 	_sMachine.switchTo(StateType::LATTACK);
 }
 
 void AGlobalCharacter::RAttack()
 {
+	_animInstance->attackSpeed = basicAttackSpeed * attackSpeedMultiplier;
 	_sMachine.switchTo(StateType::RATTACK);
 }
 

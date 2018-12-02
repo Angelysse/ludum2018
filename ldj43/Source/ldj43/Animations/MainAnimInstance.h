@@ -21,6 +21,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player")
 	float relativeSpeed = 0u;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player")
+	float attackSpeed = 1.0f;
+
 	void NativeInitializeAnimation() override;
 
 	void NativeUpdateAnimation(float DeltaSeconds) override;
