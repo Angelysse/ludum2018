@@ -14,6 +14,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sacrifice")
 	FString itemName = "Potion";
 
+	virtual void GenerateDescriptions() override
+	{
+		_bonusDescription = "Gain a health potion";
+		_malusDescription = "Lose your potion (if you have one)";
+	};
+
 	void Regenerate() override
 	{
 	}
