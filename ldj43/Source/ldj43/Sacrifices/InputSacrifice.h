@@ -16,6 +16,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sacrifice")
 	uint8 action = static_cast<uint8>(Action::JUMP);
 
+	UInputSacrifice()
+	{
+		GenerateDescriptions();
+		_image = Cast<UTexture2D>(StaticLoadObject(UTexture2D::StaticClass(), NULL, TEXT("Texture2D'/Game/Resources/Textures/viteviteicone.viteviteicone'")));
+	}
+	
 	virtual void GenerateDescriptions() override
 	{
 		_bonusDescription = "Regain access to the jump key";

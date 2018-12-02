@@ -14,6 +14,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sacrifice")
 	FString itemName = "Potion";
 
+	UItemSacrifice()
+	{
+		GenerateDescriptions();
+		_image = Cast<UTexture2D>(StaticLoadObject(UTexture2D::StaticClass(), NULL, TEXT("Texture2D'/Game/Resources/Textures/potion_de_vie_ico.potion_de_vie_ico'")));
+	}
+
 	virtual void GenerateDescriptions() override
 	{
 		_bonusDescription = "Gain a health potion";

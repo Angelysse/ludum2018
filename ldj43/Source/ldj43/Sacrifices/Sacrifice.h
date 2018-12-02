@@ -24,7 +24,7 @@ protected:
 
 public:
 	USacrifice() 
-	{ 
+	{
 		GenerateDescriptions(); 
 	};
 
