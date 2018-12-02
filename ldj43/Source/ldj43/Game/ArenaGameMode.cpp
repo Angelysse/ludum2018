@@ -10,6 +10,7 @@
 #include "Engine/World.h"
 #include "TimerManager.h"
 #include "Kismet/GameplayStatics.h"
+#include "Runtime/Engine/Public/TimerManager.h"
 
 //=====================
 //Overriden Methods
@@ -32,6 +33,8 @@ void AArenaGameMode::BeginPlay()
 	handleNewRound();
 }
 
+//-----------------
+
 void AArenaGameMode::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
@@ -49,6 +52,15 @@ void AArenaGameMode::StartPlay()
 	Super::StartPlay();
 
 	GenerateMap();
+}
+
+//-----------------
+
+void AArenaGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	GetWorld()->GetTimerManager().ClearTimer(_waveTimeOutHandle);
 }
 
 //=====================
@@ -83,6 +95,8 @@ void AArenaGameMode::GenerateMap()
 	}
 }
 
+//-----------------
+
 void AArenaGameMode::GenerateSacrifice()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "GENERATE");
@@ -106,6 +120,8 @@ void AArenaGameMode::GenerateSacrifice()
 	_prevTime = _targetTime;
 	_targetTime = slowTime;
 }
+
+//-----------------
 
 void AArenaGameMode::ResetTimeDelation()
 {
@@ -161,8 +177,26 @@ void AArenaGameMode::handleNewRound()
 
 void AArenaGameMode::handleNewWave()
 {
-	uint32 nbBots = _currentRound.nextWave();
-	_aiManager->spawnWave(nbBots);
+	AArenaGameState* gameState = Cast<AArenaGameState>(GameState);
+	if (gameState != nullptr)
+	{
+		_aiManager->spawnWave(_currentRound.nextWave());
+		GetWorld()->GetTimerManager().SetTimer(_waveTimeOutHandle, this, &AArenaGameMode::handleNewWaveWithCheck, _waveTimeoutDelay, false);
+	}
+}
+
+//-----------------
+
+void AArenaGameMode::handleNewWaveWithCheck()
+{
+	if (!_currentRound.isLastWave())
+	{
+		AArenaGameState* gameState = Cast<AArenaGameState>(GameState);
+		if (gameState != nullptr)
+		{
+			gameState->switchToNextWave();
+		}
+	}
 }
 
 //-----------------

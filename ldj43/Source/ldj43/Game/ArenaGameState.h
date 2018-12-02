@@ -22,14 +22,16 @@ private:
 	FTakeDamage	_takeDamage;
 	FDie		_die;
 
-	float _currentTimer = 0;
-	float _maxTimer = 5;
-	bool _isSelecting = false;
-
 	int _round = 0;
 	int _wave = 0;
 
 	class AIngameHUD* _hud;
+
+protected:
+	UPROPERTY(EditAnywhere, BluePrintReadWrite)
+	float _currentTimer = 5;
+	UPROPERTY(EditAnywhere, BluePrintReadWrite)
+	float _maxTimer = 5;
 
 public:
 	//Custom Methods
