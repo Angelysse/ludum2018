@@ -4,7 +4,6 @@
 
 #include "EngineUtils.h"
 #include "EngineGlobals.h"
-#include "Engine/Engine.h"
 #include "Engine/World.h"
 
 //=====================
@@ -41,10 +40,8 @@ void AArenaGameMode::StartPlay()
 
 void AArenaGameMode::GenerateMap()
 {
-	uint32 gridWidth = _mapWidth / _mapStepWidth;
-	uint32 gridHeight = _mapHeight / _mapStepHeight;
-
-	//char* map = new char[gridWidth * gridHeight]{};
+	uint32 gridWidth = _mapWidth / _mapStepWidth; uint32 gridHeight = _mapHeight / _mapStepHeight;
+	uint32 midX = gridWidth / 2; uint32 midY = gridHeight / 2;
 
 	if (_wallsRoot->Children.Num())
 		_wallsRoot->Children.Empty();
@@ -59,18 +56,12 @@ void AArenaGameMode::GenerateMap()
 		uint32 sizeX = FMath::RandRange(1, _mapMaxWallSize); uint32 sizeY = FMath::RandRange(1, _mapMaxWallSize);
 		uint32 posX = FMath::RandRange(0, gridWidth); uint32 posY = FMath::RandRange(0, gridHeight);
 
-		if (!(posX > gridWidth / 2 || posX + sizeX < gridWidth / 2 || posY > gridHeight / 2 || posY + sizeY < gridHeight / 2))
+		if (!(posX - 100 * sizeX / 2 > midX + 100 || posX + 100 * sizeX / 2 < midX - 100 ||
+			posY - 100 * sizeY / 2 > midY + 100 || posY + 100 * sizeY / 2 < midY - 100))
 			goto START; // You know, I have slept only 2 hours... Yes life.
 
-		//// Fill map.
-		//for (uint32 j = 0u; j < sizeY; j++)
-		//{
-		//	for (uint32 k = 0u; k < sizeX; k++)
-		//		map[posX + posY * gridWidth] = 1;
-		//}
-
 		// Spawn Block.
-		auto actor = GetWorld()->SpawnActor<ACubeActor>(FVector(float(posX) - _mapWidth / 2, float(posY) - _mapHeight / 2, 270.0), FRotator::ZeroRotator);
+		auto actor = GetWorld()->SpawnActor<ACubeActor>(FVector(float(posX) - midX, float(posY) - midY, 270.0), FRotator::ZeroRotator);
 		actor->SetActorScale3D(FVector(sizeX, sizeY, 5));
 		actor->AttachToActor(_wallsRoot, FAttachmentTransformRules::KeepWorldTransform);
 	}
