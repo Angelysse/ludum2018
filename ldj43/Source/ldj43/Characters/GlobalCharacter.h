@@ -33,6 +33,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	float attackCooldown = 0.1f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+	float attackRange = 70.0f;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool canAttack = true;
 
@@ -44,10 +47,32 @@ public:
 	
 	//Custom Methods
 	virtual void LAttack();
+
+	UFUNCTION(BlueprintCallable)
 	virtual void RAttack();
+
+	UFUNCTION(BlueprintCallable)
+	virtual bool canHit(AGlobalCharacter const* other);
+
+	UFUNCTION(BlueprintCallable)
+	void takeDamageFrom(AGlobalCharacter const* other, float damages);
+
+	virtual void onTakeDamageFrom(AGlobalCharacter const* other);
+
+	virtual void onDie(AGlobalCharacter const* killedBy);
+
+	virtual void startAttack();
+	virtual void endAttack();
+
+	UFUNCTION(BlueprintCallable)
+	virtual void endAttackCooldown();
 
 	UFUNCTION(BlueprintCallable, Category = "Player")
 	uint8 GetState() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual float getAttackPower(bool isRightSlot) const;
+
 	UFUNCTION(BlueprintCallable, Category = "Player")
 	void SetState(uint8 state);
 

@@ -40,13 +40,24 @@ class LDJ43_API AMainCharacter : public AGlobalCharacter
 
 		void Tick(float DeltaTime) override;
 
+		virtual bool canHit(AGlobalCharacter const* other) override;
+
 		void UseItem();
 
 		void StartJump();
+
 		UFUNCTION(BlueprintCallable, Category = "Player")
 		void EndJump();
+
 		UFUNCTION(BlueprintCallable)
 		void SetupThirdPersonCamera();
+
 		UFUNCTION(BlueprintCallable)
 		void SetupFirstPersonCamera();
+
+		virtual float getAttackPower(bool isRightSlot) const override;
+
+		virtual void onTakeDamageFrom(AGlobalCharacter const* other) override;
+
+		virtual void onDie(AGlobalCharacter const* killedBy) override;
 };

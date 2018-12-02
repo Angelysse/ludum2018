@@ -1,7 +1,10 @@
 #include "MainCharacter.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Game/ArenaGameMode.h"
+#include "BasicAICharacter.h"
 
+#include "EngineGlobals.h"
+#include "Engine/Engine.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
 
@@ -70,27 +73,10 @@ void AMainCharacter::UseItem()
 		_item->Use();
 }
 
-//void AMainCharacter::LAttack()
-//{
-//	//if (_lWeapon && !_isAttacking)
-//	//{
-//	//	_isAttacking = true;
-//	//	_lWeapon->Use();
-//
-//	//	//_isAttacking = false on end animation
-//	//}
-//}
-//
-//void AMainCharacter::RAttack()
-//{
-//	//if (_rWeapon && !_isAttacking)
-//	//{
-//	//	_isAttacking = true;
-//	//	_rWeapon->Use();
-//
-//	//	//_isAttacking = false on end animation
-//	//}
-//}
+bool AMainCharacter::canHit(AGlobalCharacter const* other)
+{
+	return Cast<ABasicAICharacter>(other) != nullptr;
+}
 
 void AMainCharacter::StartJump()
 {
@@ -130,4 +116,36 @@ void AMainCharacter::SetupThirdPersonCamera()
 	
 	GetMesh()->SetCastShadow(true);
 	GetMesh()->UnHideBoneByName("neck_01");
+}
+
+float AMainCharacter::getAttackPower(bool isRightSlot) const
+{
+	if (isRightSlot)
+	{
+		if (_rWeapon != nullptr)
+		{
+			return _rWeapon->_damages;
+		}
+	}
+	else if (_lWeapon != nullptr)
+	{
+		return _lWeapon->_damages;
+	}
+
+	return AGlobalCharacter::getAttackPower(isRightSlot);
+}
+
+void AMainCharacter::onTakeDamageFrom(AGlobalCharacter const* other)
+{
+	//Refresh GUI
+	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "Take damage : " + FString::SanitizeFloat(hp));
+}
+
+void AMainCharacter::onDie(AGlobalCharacter const* killedBy)
+{
+	AGlobalCharacter::onDie(killedBy);
+
+	//Call lose event
+
+	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "Main player died");
 }

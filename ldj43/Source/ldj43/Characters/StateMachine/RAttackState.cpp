@@ -5,11 +5,12 @@
 void RAttackState::onEnterState()
 {
 	_chara->canAttack = false;
+	_chara->startAttack();
 }
 
 void RAttackState::onExitState()
 {
-	//Do something
+	_chara->endAttack();
 }
 
 bool RAttackState::canSwitchTo(uint8 newState) const
