@@ -25,6 +25,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	float maxHp = 100.0f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	float hp = maxHp;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
