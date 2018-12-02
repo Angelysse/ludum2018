@@ -5,6 +5,8 @@
 #include "EngineUtils.h"
 #include "EngineGlobals.h"
 #include "Engine/World.h"
+#include "TimerManager.h"
+#include "Kismet/GameplayStatics.h"
 
 //=====================
 //Overriden Methods
@@ -24,6 +26,14 @@ void AArenaGameMode::BeginPlay()
 	Super::BeginPlay();
 
 	_aiManager->spawnWave(20);
+}
+
+void AArenaGameMode::Tick(float DeltaSeconds)
+{
+	float time = UGameplayStatics::GetGlobalTimeDilation(GetWorld());
+
+	if (!FMath::IsNearlyEqual(time, targetTime))
+		UGameplayStatics::SetGlobalTimeDilation(GetWorld(), FMath::Lerp(slowTime, targetTime, DeltaSeconds * FMath::Sqrt(time)));
 }
 
 //-----------------
@@ -69,7 +79,26 @@ void AArenaGameMode::GenerateMap()
 
 void AArenaGameMode::GenerateSacrifice()
 {
+	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 0.4);
 
+	uint32 bIndex1 = FMath::RandRange(0, sacrifices.Num() - 1);
+	uint32 mIndex1 = FMath::RandRange(0, sacrifices.Num() - 1);
+
+	while(mIndex1 == bIndex1)
+		mIndex1 = FMath::RandRange(0, sacrifices.Num() - 1);
+
+	uint32 bIndex2 = FMath::RandRange(0, sacrifices.Num() - 1);
+	uint32 mIndex2 = FMath::RandRange(0, sacrifices.Num() - 1);
+
+	while (mIndex2 == bIndex2)
+		mIndex2 = FMath::RandRange(0, sacrifices.Num() - 1);
+
+	targetTime = slowTime;
+}
+
+void AArenaGameMode::ResetTimeDelation()
+{
+	targetTime = 1.0f;
 }
 
 //-----------------
