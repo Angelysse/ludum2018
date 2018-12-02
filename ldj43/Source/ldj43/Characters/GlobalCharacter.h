@@ -34,6 +34,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	float attackCooldown = 0.1f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool canAttack = true;
+
 	//Constructors
 	AGlobalCharacter();
 

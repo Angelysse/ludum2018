@@ -1,8 +1,10 @@
 #include "RAttackState.h"
 
+#include "Characters/GlobalCharacter.h"
+
 void RAttackState::onEnterState()
 {
-	//Do something
+	_chara->canAttack = false;
 }
 
 void RAttackState::onExitState()
