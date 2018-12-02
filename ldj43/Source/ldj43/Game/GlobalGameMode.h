@@ -16,4 +16,7 @@ public:
 
 	UWeaponComponentBase* GetWeapon(const FString& name);
 	void FreeWeapon(UWeaponComponentBase* weapon);
+
+	DECLARE_EVENT(AGlobalGameMode, GameEvents)
+	GameEvents onEndGame;
 };
