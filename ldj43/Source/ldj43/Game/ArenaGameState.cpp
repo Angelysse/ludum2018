@@ -22,6 +22,13 @@ void AArenaGameState::switchToNextRound()
 
 //-----------------
 
+void AArenaGameState::switchToEndGame()
+{
+	_endGame.Broadcast();
+}
+
+//-----------------
+
 void AArenaGameState::onTakeDamage(AGlobalCharacter* hitBy)
 {
 	_takeDamage.Broadcast(hitBy);
@@ -66,3 +73,8 @@ FDie& AArenaGameState::getOnDie()
 }
 
 //-----------------
+
+FEndGame& AArenaGameState::getEndGame()
+{
+	return _endGame;
+}

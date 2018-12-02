@@ -3,6 +3,7 @@
 #include "Characters/MainCharacter.h"
 #include "UI/PlayerWidget.h"
 #include "UI/SacrificeSelectorWidget.h"
+#include "UI/EndGameWidget.h"
 
 #include "GameFramework/HUD.h"
 #include "IngameHUD.generated.h"
@@ -17,6 +18,9 @@ private:
 	AArenaGameState* _gamestate = nullptr;
 
 	AIngameHUD();
+
+	void registerToGameEvents();
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<UUserWidget> _playerWidgetClass;
@@ -30,6 +34,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USacrificeSelectorWidget* _sacrificeSelectorWidget = nullptr;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UUserWidget> _endGameWidgetClass;
+
+	UPROPERTY(BlueprintReadWrite)
+	UEndGameWidget*			_endGameWidgetInstance = nullptr;
+
 public:
 	void BeginPlay() override;
 
@@ -38,4 +48,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void NewSacrifice(USacrifice* bonus1, USacrifice* malus1, USacrifice* bonus2, USacrifice* malus2);
+
+	UFUNCTION()
+	void handleEndGameGUI();
 };
