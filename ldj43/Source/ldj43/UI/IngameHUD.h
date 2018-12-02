@@ -2,6 +2,7 @@
 
 #include "Characters/MainCharacter.h"
 #include "UI/PlayerWidget.h"
+#include "UI/SacrificeSelectorWidget.h"
 
 #include "GameFramework/HUD.h"
 #include "IngameHUD.generated.h"
@@ -12,7 +13,8 @@ class LDJ43_API AIngameHUD : public AHUD
 	GENERATED_BODY()
 
 private:
-	AGlobalCharacter* _player = nullptr;
+	AMainCharacter* _player = nullptr;
+	AArenaGameState* _gamestate = nullptr;
 
 	AIngameHUD();
 protected:
@@ -22,9 +24,17 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UPlayerWidget* _playerWidget = nullptr;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<UUserWidget> _sacrificeSelectorWidgetClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USacrificeSelectorWidget* _sacrificeSelectorWidget = nullptr;
+
 public:
 	void BeginPlay() override;
 
 	void SetWaveNumber(int number);
 	void SetRoundNumber(int number);
+
+	void NewSacrifice(USacrifice* bonus1, USacrifice* malus1, USacrifice* bonus2, USacrifice* malus2);
 };

@@ -1,6 +1,6 @@
 #include "PlayerWidget.h"
 
-void UPlayerWidget::SetPlayer(AGlobalCharacter* player)
+void UPlayerWidget::SetPlayer(AMainCharacter* player)
 {
 	_player = player;
 }

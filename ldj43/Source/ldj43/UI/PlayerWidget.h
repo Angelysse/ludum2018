@@ -14,7 +14,7 @@ protected:
 	AGlobalCharacter* _player;
 	
 public:
-	void SetPlayer(AGlobalCharacter* player);
+	void SetPlayer(AMainCharacter* player);
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void SetRound(int round);

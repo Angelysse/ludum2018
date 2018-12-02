@@ -3,6 +3,8 @@
 #include "Game/GlobalGameMode.h"
 #include "AI/AIManager.h"
 
+#include "Sacrifices/SacrificeIncludes.h"
+
 #include "ArenaGameMode.generated.h"
 
 UCLASS()
@@ -24,13 +26,16 @@ class LDJ43_API AArenaGameMode : public AGlobalGameMode
 		virtual void InitGame(FString const& MapName, FString const& Options, FString& ErrorMessage) override;
 		virtual void BeginPlay() override;
 	
-	protected:
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
-		int _mapMaxWallSize = 10;
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
-		int _mapMinWalls = 25;
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
-		int _mapMaxWalls = 125;
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game")
+	TArray<TSubclassOf<USacrifice>> sacrifices;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
+	int _mapMaxWallSize = 10;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
+	int _mapMinWalls = 25;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
+	int _mapMaxWalls = 125;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
 		int _mapWidth = 9000;
@@ -42,7 +47,8 @@ class LDJ43_API AArenaGameMode : public AGlobalGameMode
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
 		float _mapStepHeight = 1.0f;
 
-		void GenerateMap();
+	void GenerateMap();
+	void GenerateSacrifice();
 
 		void StartPlay() override;
 };
