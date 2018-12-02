@@ -99,6 +99,10 @@ void AGlobalCharacter::SetState(uint8 state)
 	_sMachine.switchTo(static_cast<StateType>(state));
 }
 
+float AGlobalCharacter::GetMaxHP() const
+{
+	return maxHp;
+}
 void AGlobalCharacter::SetMaxHP(float _maxHp)
 {
 	maxHp = _maxHp;
