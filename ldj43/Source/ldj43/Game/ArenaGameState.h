@@ -9,6 +9,7 @@ DECLARE_EVENT(AArenaGameState, FNextWave);
 DECLARE_EVENT(AArenaGameState, FNextRound);
 DECLARE_EVENT_OneParam(AArenaGameState, FTakeDamage, AGlobalCharacter*);
 DECLARE_EVENT_TwoParams(AArenaGameState, FDie, AGlobalCharacter*, AGlobalCharacter*);
+DECLARE_EVENT(AArenaGameState, FEndGame);
 
 UCLASS()
 class LDJ43_API AArenaGameState : public AGlobalGameState
@@ -21,6 +22,7 @@ private:
 	FNextRound	_nextRound;
 	FTakeDamage	_takeDamage;
 	FDie		_die;
+	FEndGame	_endGame;
 
 	int _round = 0;
 	int _wave = 0;
@@ -37,6 +39,7 @@ public:
 	//Custom Methods
 	void switchToNextWave();
 	void switchToNextRound();
+	void switchToEndGame();
 	void onTakeDamage(AGlobalCharacter* hitBy);
 	void onDie(AGlobalCharacter* deadChar, AGlobalCharacter* killedBy);
 
@@ -45,4 +48,5 @@ public:
 	FNextRound&		getOnNextRound();
 	FTakeDamage&	getOnTakeDamage();
 	FDie&			getOnDie();
+	FEndGame&		getEndGame();
 };
