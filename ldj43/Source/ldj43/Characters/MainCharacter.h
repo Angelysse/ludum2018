@@ -62,7 +62,7 @@ class LDJ43_API AMainCharacter : public AGlobalCharacter
 
 		virtual float getAttackPower(bool isRightSlot) const override;
 
-		virtual void onTakeDamageFrom(AGlobalCharacter const* other) override;
+		virtual void onTakeDamageFrom(AGlobalCharacter* other) override;
 
-		virtual void onDie(AGlobalCharacter const* killedBy) override;
+		virtual void onDie(AGlobalCharacter* deadChar, AGlobalCharacter* other) override;
 };

@@ -13,6 +13,11 @@ class LDJ43_API AGlobalCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
+private:
+	//Custom Methods
+	void registerToGameEvents();
+	void setupStats();
+
 protected:
 	//Variables
 	StateMachine		_sMachine		= StateMachine(this);
@@ -64,11 +69,13 @@ public:
 	virtual bool canHit(AGlobalCharacter const* other);
 
 	UFUNCTION(BlueprintCallable)
-	void takeDamageFrom(AGlobalCharacter const* other, float damages);
+	void takeDamageFrom(AGlobalCharacter* other, float damages);
 
-	virtual void onTakeDamageFrom(AGlobalCharacter const* other);
+	UFUNCTION()
+	virtual void onTakeDamageFrom(AGlobalCharacter* other);
 
-	virtual void onDie(AGlobalCharacter const* killedBy);
+	UFUNCTION()
+	virtual void onDie(AGlobalCharacter* deadChar, AGlobalCharacter* other);
 
 	virtual void startAttack();
 	virtual void endAttack();

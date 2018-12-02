@@ -22,6 +22,7 @@ private:
 
 	//Custom Methods
 	void computeEnemySpawnFrequencies();
+	void registerToGameEvents();
 
 protected:
 	//Variables
@@ -50,4 +51,7 @@ public:
 	void spawnWave(uint32 nbEnemies);
 	
 	bool areAllAIDead() const;
+
+	UFUNCTION()
+	void handleBotDeath(AGlobalCharacter* deadChar, AGlobalCharacter* other);
 };

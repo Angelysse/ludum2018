@@ -4,6 +4,10 @@
 
 #include "Controllers/BasicAIController.h"
 #include "MainCharacter.h"
+#include "Game/ArenaGameMode.h"
+
+#include "EngineGlobals.h"
+#include "Engine/Engine.h"
 
 //============================
 //Constructors
@@ -21,14 +25,6 @@ ABasicAICharacter::ABasicAICharacter():
 void ABasicAICharacter::BeginPlay()
 {
 	Super::BeginPlay();
-}
-
-//--------------------------
-
-void ABasicAICharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 
 //============================
@@ -78,3 +74,27 @@ bool ABasicAICharacter::canHit(AGlobalCharacter const* other)
 {
 	return Cast<AMainCharacter>(other) != nullptr;
 }
+
+//--------------------------
+
+void ABasicAICharacter::onDie(AGlobalCharacter* deadChar, AGlobalCharacter* killedBy)
+{
+	AGlobalCharacter::onDie(deadChar, killedBy);
+
+	if (deadChar == this)
+	{
+		ABasicAIController* controller = Cast<ABasicAIController>(GetController());
+		if (controller != nullptr)
+		{
+			controller->setIsActive(false);
+		}
+
+		AArenaGameMode* gameMode = Cast<AArenaGameMode>(GetWorld()->GetAuthGameMode());
+		if (gameMode != nullptr)
+		{
+			gameMode->_aiManager->handleBotDeath(deadChar, killedBy);
+		}
+	}
+}
+
+//--------------------------

@@ -1,9 +1,11 @@
 #include "ArenaGameMode.h"
 
+#include "ArenaGameState.h"
 #include "LD/CubeActor.h"
 
 #include "EngineUtils.h"
 #include "EngineGlobals.h"
+#include "Engine/Engine.h"
 #include "Engine/World.h"
 
 //=====================
@@ -23,7 +25,8 @@ void AArenaGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	_aiManager->spawnWave(20);
+	registerToGameEvents();
+	handleNewRound();
 }
 
 //-----------------
@@ -83,3 +86,62 @@ void AArenaGameMode::initAIManager()
 }
 
 //-----------------
+
+void AArenaGameMode::registerToGameEvents()
+{
+	AArenaGameState*	gameState = Cast<AArenaGameState>(GameState);
+
+	if (gameState != nullptr)
+	{
+		//Next round
+		gameState->getOnNextRound().AddUFunction(this, "handleNewRound");
+
+		//Next wave
+		gameState->getOnNextWave().AddUFunction(this, "handleNewWave");
+	}
+}
+
+//-----------------
+
+void AArenaGameMode::handleNewRound()
+{
+	_currentRound.nextRound();
+	handleNewWave();
+}
+
+//-----------------
+
+void AArenaGameMode::handleNewWave()
+{
+	uint32 nbBots = _currentRound.nextWave();
+	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "Spawn " + FString::SanitizeFloat(nbBots));
+	_aiManager->spawnWave(nbBots);
+}
+
+//-----------------
+
+void AArenaGameMode::checkRoundProgression(AGlobalCharacter* deadChar, AGlobalCharacter* killedBy)
+{
+	AArenaGameState*	gameState = Cast<AArenaGameState>(GameState);
+
+	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "checkRound");
+
+	if (gameState != nullptr)
+	{
+		//Wave finished
+		if (_aiManager != nullptr && _aiManager->areAllAIDead())
+		{
+			//Next round
+			if (_currentRound.isLastWave())
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "nextRound");
+				gameState->switchToNextRound();
+			}
+			else	//Next wave
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "nextWave");
+				gameState->switchToNextWave();
+			}
+		}
+	}
+}

@@ -153,17 +153,20 @@ float AMainCharacter::getAttackPower(bool isRightSlot) const
 	return AGlobalCharacter::getAttackPower(isRightSlot);
 }
 
-void AMainCharacter::onTakeDamageFrom(AGlobalCharacter const* other)
+void AMainCharacter::onTakeDamageFrom(AGlobalCharacter* other)
 {
 	//Refresh GUI
-	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "Take damage : " + FString::SanitizeFloat(hp));
+	//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "Take damage : " + FString::SanitizeFloat(hp));
 }
 
-void AMainCharacter::onDie(AGlobalCharacter const* killedBy)
+void AMainCharacter::onDie(AGlobalCharacter* deadChar, AGlobalCharacter* killedBy)
 {
-	AGlobalCharacter::onDie(killedBy);
+	AGlobalCharacter::onDie(deadChar, killedBy);
 
-	//Call lose event
+	if (deadChar == this)
+	{
+		//Call lose event
 
-	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "Main player died");
+		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Emerald, "Main player died");
+	}
 }
