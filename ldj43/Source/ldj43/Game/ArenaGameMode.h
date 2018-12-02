@@ -19,18 +19,19 @@ private:
 	AActor*			_wallsRoot = nullptr;
 	ArenaRound		_currentRound;
 
-	FTimerHandle _spawnHandle;
+	FTimerHandle	_waveTimeOutHandle;
 
 	//Custom Methods
 	void initAIManager();
 	void registerToGameEvents();
+	void handleNewWaveWithCheck();
 
 	UFUNCTION()
 	void handleNewRound();
 
 	UFUNCTION()
 	void handleNewWave();
-		
+
 	float targetTime = 1.0f;
 
 protected:
@@ -57,12 +58,16 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Map")
 	float _mapStepHeight = 1.0f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float _waveTimeoutDelay = 20.0f;
+
 public:
 	void Tick(float DeltaSeconds) override;
 
 	//Overriden Methods
 	virtual void InitGame(FString const& MapName, FString const& Options, FString& ErrorMessage) override;
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 
 	void GenerateMap();

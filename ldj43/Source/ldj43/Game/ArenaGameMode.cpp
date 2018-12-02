@@ -9,6 +9,7 @@
 #include "Engine/World.h"
 #include "TimerManager.h"
 #include "Kismet/GameplayStatics.h"
+#include "Runtime/Engine/Public/TimerManager.h"
 
 //=====================
 //Overriden Methods
@@ -31,10 +32,14 @@ void AArenaGameMode::BeginPlay()
 	handleNewRound();
 }
 
+//-----------------
+
 void AArenaGameMode::Tick(float DeltaSeconds)
 {
-	float time = UGameplayStatics::GetGlobalTimeDilation(GetWorld());
+	Super::Tick(DeltaSeconds);
 
+	float time = UGameplayStatics::GetGlobalTimeDilation(GetWorld());
+	
 	if (!FMath::IsNearlyEqual(time, targetTime))
 		UGameplayStatics::SetGlobalTimeDilation(GetWorld(), FMath::Lerp(slowTime, targetTime, DeltaSeconds * FMath::Sqrt(time)));
 }
@@ -46,6 +51,15 @@ void AArenaGameMode::StartPlay()
 	Super::StartPlay();
 
 	GenerateMap();
+}
+
+//-----------------
+
+void AArenaGameMode::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	GetWorld()->GetTimerManager().ClearTimer(_waveTimeOutHandle);
 }
 
 //=====================
@@ -80,6 +94,8 @@ void AArenaGameMode::GenerateMap()
 	}
 }
 
+//-----------------
+
 void AArenaGameMode::GenerateSacrifice()
 {
 	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 0.4);
@@ -98,6 +114,8 @@ void AArenaGameMode::GenerateSacrifice()
 
 	targetTime = slowTime;
 }
+
+//-----------------
 
 void AArenaGameMode::ResetTimeDelation()
 {
@@ -147,8 +165,26 @@ void AArenaGameMode::handleNewRound()
 
 void AArenaGameMode::handleNewWave()
 {
-	uint32 nbBots = _currentRound.nextWave();
-	_aiManager->spawnWave(nbBots);
+	AArenaGameState* gameState = Cast<AArenaGameState>(GameState);
+	if (gameState != nullptr)
+	{
+		_aiManager->spawnWave(_currentRound.nextWave());
+		GetWorld()->GetTimerManager().SetTimer(_waveTimeOutHandle, this, &AArenaGameMode::handleNewWaveWithCheck, _waveTimeoutDelay, false);
+	}
+}
+
+//-----------------
+
+void AArenaGameMode::handleNewWaveWithCheck()
+{
+	if (!_currentRound.isLastWave())
+	{
+		AArenaGameState* gameState = Cast<AArenaGameState>(GameState);
+		if (gameState != nullptr)
+		{
+			gameState->switchToNextWave();
+		}
+	}
 }
 
 //-----------------
