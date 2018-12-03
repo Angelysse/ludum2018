@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Sound/SoundCue.h"
+
 #include "GameFramework/Character.h"
 #include "StateMachine/StateMachine.h"
 
@@ -53,6 +55,12 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool canAttack = true;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character")
+	USoundCue* hitSound;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character")
+	USoundCue* deathSound;
 
 	class UMainAnimInstance*	_animInstance = nullptr;
 

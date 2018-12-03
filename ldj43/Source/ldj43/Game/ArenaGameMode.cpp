@@ -99,8 +99,6 @@ void AArenaGameMode::GenerateMap()
 
 void AArenaGameMode::GenerateSacrifice()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, "GENERATE");
-
 	uint32 bIndex1 = FMath::RandRange(0, sacrifices.Num() - 1);
 	uint32 mIndex1 = FMath::RandRange(0, sacrifices.Num() - 1);
 
@@ -117,6 +115,9 @@ void AArenaGameMode::GenerateSacrifice()
 	sacrifices[mIndex1].GetDefaultObject()->Regenerate();
 	sacrifices[bIndex2].GetDefaultObject()->Regenerate();
 	sacrifices[mIndex2].GetDefaultObject()->Regenerate();
+
+	if(sacrificeSound)
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), sacrificeSound, FVector()); // no attenuation ;)
 
 	Cast<AIngameHUD>(GetWorld()->GetFirstPlayerController()->GetHUD())->
 		NewSacrifice(sacrifices[bIndex1].GetDefaultObject(), sacrifices[mIndex1].GetDefaultObject(),

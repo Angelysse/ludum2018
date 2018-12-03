@@ -1,5 +1,7 @@
 #pragma once
 
+
+#include "Sound/SoundCue.h"
 #include "Game/GlobalGameMode.h"
 #include "AI/AIManager.h"
 #include "ArenaRound.h"
@@ -36,9 +38,13 @@ private:
 	float _prevTime = 1.0f;
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
-	float sacrificeRate = 0.1f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game")
+	float sacrificeRate = 0.2f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game")
+	USoundCue* sacrificeSound;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game")
 	TArray<TSubclassOf<USacrifice>> sacrifices;
 

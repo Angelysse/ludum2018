@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Sound/SoundCue.h"
+
 #include "Components/ActorComponent.h"
 #include "ItemComponentBase.generated.h"
 
@@ -12,6 +14,9 @@ class LDJ43_API UItemComponentBase : public UActorComponent
 	protected:
 		//Variables
 		FTimerHandle	_timerHandle;
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		USoundCue* useSound;
 
 		float			_cooldown		= 0.0f;
 		bool			_isInCooldown	= false;

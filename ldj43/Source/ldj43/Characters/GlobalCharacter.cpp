@@ -4,6 +4,7 @@
 
 #include "EngineGlobals.h"
 #include "Engine/Engine.h"
+#include "Kismet/GameplayStatics.h"
 
 AGlobalCharacter::AGlobalCharacter():
 	_sMachine { this }
@@ -81,7 +82,15 @@ void AGlobalCharacter::takeDamageFrom(AGlobalCharacter* other, float damages)
 
 		//Check if die
 		if (hp <= 0)
+		{
 			gameState->onDie(this, other);
+
+			if (deathSound)
+				UGameplayStatics::PlaySoundAtLocation(GetWorld(), deathSound, GetTransform().GetLocation());
+		}
+		
+		if (hitSound)
+				UGameplayStatics::PlaySoundAtLocation(GetWorld(), hitSound, GetTransform().GetLocation());
 	}
 }
 
