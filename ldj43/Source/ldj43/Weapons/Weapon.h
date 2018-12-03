@@ -13,4 +13,13 @@ public:
 	float _attackSpeed = 1.0f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	float _damages = 10.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+	FTransform baseTr;
+
+	void SetActive(bool b);
+	void ResetTransform()
+	{
+		RootComponent->SetWorldTransform(baseTr);
+	}
 };

@@ -37,6 +37,8 @@ public:
 	}
 	void ApplyMalus(AMainCharacter* chara) override
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Disable %d"), static_cast<uint8>(action)));
+
 		Cast<AMainPlayerController>(chara->Controller)->disableAction(static_cast<Action>(action));
 	}
 };

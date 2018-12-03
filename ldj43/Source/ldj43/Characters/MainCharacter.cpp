@@ -59,7 +59,10 @@ void AMainCharacter::SetWeapon(const FString& name, bool isRight)
 	if (isRight)
 	{
 		if (_rWeapon)
+		{
 			gm->FreeWeapon(_rWeapon);
+			_rWeapon = nullptr;
+		}
 
 		if (!name.IsEmpty())
 		{
@@ -70,7 +73,10 @@ void AMainCharacter::SetWeapon(const FString& name, bool isRight)
 	else
 	{
 		if (_lWeapon)
+		{
 			gm->FreeWeapon(_lWeapon);
+			_lWeapon = nullptr;
+		}
 
 		if (!name.IsEmpty())
 		{

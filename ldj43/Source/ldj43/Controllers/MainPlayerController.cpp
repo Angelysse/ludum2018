@@ -166,6 +166,8 @@ void AMainPlayerController::enableAction(Action action)
 
 void AMainPlayerController::disableAction(Action action)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Disable %d"), static_cast<uint8>(action)));
+
 	InputComponent->RemoveActionBinding(static_cast<int32>(action));
 }
 
