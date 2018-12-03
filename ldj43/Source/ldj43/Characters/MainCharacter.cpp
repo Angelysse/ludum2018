@@ -44,7 +44,7 @@ UCameraComponent const* AMainCharacter::GetCameraComponent()
 	return _camera;
 }
 
-void AMainCharacter::SetItem(const FString& name)
+void AMainCharacter::PickupItem(const FString& name)
 {
 	if (!name.IsEmpty())
 	{
@@ -52,36 +52,36 @@ void AMainCharacter::SetItem(const FString& name)
 	}
 }
 
-void AMainCharacter::SetWeapon(const FString& name, bool isRight)
+void AMainCharacter::PickupWeapon(const FString& name)
 {
 	auto gm = Cast<AGlobalGameMode>(GetWorld()->GetAuthGameMode());
 
-	if (isRight)
+	if (name.IsEmpty())
 	{
 		if (_rWeapon)
 		{
 			gm->FreeWeapon(_rWeapon);
 			_rWeapon = nullptr;
 		}
-
-		if (!name.IsEmpty())
-		{
-			_rWeapon = gm->GetWeapon("r" + name);
-			_rWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "hand_r");
-		}
-	}
-	else
-	{
-		if (_lWeapon)
+		else if (_lWeapon)
 		{
 			gm->FreeWeapon(_lWeapon);
 			_lWeapon = nullptr;
 		}
-
-		if (!name.IsEmpty())
+	}
+	else if(!_lWeapon || !_rWeapon)
+	{
+		if (!_lWeapon || _rWeapon)
 		{
 			_lWeapon = gm->GetWeapon("l" + name);
+			_lWeapon->ResetTransform(false);
 			_lWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "hand_l");
+		}
+		else
+		{
+			_rWeapon = gm->GetWeapon("r" + name);
+			_rWeapon->ResetTransform(true);
+			_rWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, "hand_r");
 		}
 	}
 }

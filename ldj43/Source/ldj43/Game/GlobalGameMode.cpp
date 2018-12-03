@@ -4,7 +4,6 @@
 AWeapon* AGlobalGameMode::GetWeapon(const FString& name)
 {
 	AWeapon* weapon = weapons[name];
-	weapon->ResetTransform();
 	weapon->SetActive(true);
 
 	return weapon;

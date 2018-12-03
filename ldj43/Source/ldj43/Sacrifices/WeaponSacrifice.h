@@ -31,10 +31,10 @@ public:
 	}
 	void ApplyBonus(AMainCharacter* chara) override
 	{
-		chara->SetWeapon(weaponName, false);
+		chara->PickupWeapon(weaponName);
 	}
 	void ApplyMalus(AMainCharacter* chara) override
 	{
-		chara->SetWeapon("", false);
+		chara->PickupWeapon("");
 	}
 };

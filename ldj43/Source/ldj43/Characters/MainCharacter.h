@@ -36,8 +36,8 @@ class LDJ43_API AMainCharacter : public AGlobalCharacter
 
 		UCameraComponent const* GetCameraComponent();
 
-		void SetItem(const FString& name);
-		void SetWeapon(const FString& name, bool isRight = true);
+		void PickupItem(const FString& name);
+		void PickupWeapon(const FString& name);
 
 		void Tick(float DeltaTime) override;
 

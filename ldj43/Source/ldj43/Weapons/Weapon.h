@@ -15,11 +15,13 @@ public:
 	float _damages = 10.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
-	FTransform baseTr;
+	FTransform lTr;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+	FTransform rTr;
 
 	void SetActive(bool b);
-	void ResetTransform()
+	void ResetTransform(bool isRight)
 	{
-		RootComponent->SetWorldTransform(baseTr);
+		RootComponent->SetWorldTransform(isRight ? rTr : lTr);
 	}
 };

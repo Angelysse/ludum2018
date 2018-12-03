@@ -31,10 +31,10 @@ public:
 	}
 	void ApplyBonus(AMainCharacter* chara) override
 	{
-		chara->SetItem(itemName);
+		chara->PickupItem(itemName);
 	}
 	void ApplyMalus(AMainCharacter* chara) override
 	{
-		chara->SetItem("");
+		chara->PickupItem("");
 	}
 };
